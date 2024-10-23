@@ -1,4 +1,4 @@
-module github.com/Alecktos/couplesLoveGame
+module github.com/Alecktos/clg
 
 go 1.22.5
 
