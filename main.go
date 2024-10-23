@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/Alecktos/couplesLoveGame/game"
 	"github.com/hajimehoshi/ebiten/v2"
 	"log"
 )
@@ -8,7 +9,7 @@ import (
 func main() {
 	ebiten.SetWindowSize(640, 480)
 	ebiten.SetWindowTitle("Hello, World!")
-	if err := ebiten.RunGame(&ClgGame{}); err != nil {
+	if err := ebiten.RunGame(&game.ClgGame{}); err != nil {
 		log.Fatal(err)
 	}
 }
