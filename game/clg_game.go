@@ -1,7 +1,7 @@
 package game
 
 import (
-	"github.com/Alecktos/couplesLoveGame/view"
+	"github.com/Alecktos/clg/view"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 )

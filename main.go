@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/Alecktos/couplesLoveGame/game"
+	"github.com/Alecktos/clg/game"
 	"github.com/hajimehoshi/ebiten/v2"
 	"log"
 )
