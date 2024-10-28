@@ -18,10 +18,7 @@ func (g *ClgGame) Update() error {
 
 func (g *ClgGame) Draw(screen *ebiten.Image) {
 	ebitenutil.DebugPrint(screen, "Hello, World!")
-	op := &ebiten.DrawImageOptions{}
-	op.GeoM.Translate(50, 50)
-	op.GeoM.Scale(0.5, 0.5)
-	screen.DrawImage(clgSprite.Img, op)
+	clgSprite.Draw(screen)
 }
 
 func (g *ClgGame) Layout(outsideWidth, outsideHeight int) (screenWidth, screenHeight int) {
