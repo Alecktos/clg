@@ -2,7 +2,10 @@ module github.com/Alecktos/clg
 
 go 1.22.5
 
-require github.com/hajimehoshi/ebiten/v2 v2.8.1
+require (
+	github.com/hajimehoshi/ebiten/v2 v2.8.1
+	golang.org/x/exp v0.0.0-20241009180824-f66d83c29e7c
+)
 
 require (
 	github.com/ebitengine/gomobile v0.0.0-20241016134836-cc2e38a7c0ee // indirect

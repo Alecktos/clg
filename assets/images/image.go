@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"github.com/hajimehoshi/ebiten/v2"
 	"image"
+	_ "image/png" // All the sudden I needed this. Might not work in iOS??
 )
 
 func LoadBrickImage() (*ebiten.Image, error) {

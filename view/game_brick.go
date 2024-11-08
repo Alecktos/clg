@@ -10,6 +10,10 @@ type ClgSprite struct {
 	Img *ebiten.Image
 }
 
+func (c *ClgSprite) Update() {
+
+}
+
 func (c *ClgSprite) Draw(screen *ebiten.Image) {
 	op := &ebiten.DrawImageOptions{}
 	op.GeoM.Translate(50, 50)
@@ -17,6 +21,7 @@ func (c *ClgSprite) Draw(screen *ebiten.Image) {
 	screen.DrawImage(c.Img, op)
 }
 
+// TODO: Handle error on top level with graphics
 func (c *ClgSprite) loadImage() {
 	var err error
 	image, err := images.LoadBrickImage()

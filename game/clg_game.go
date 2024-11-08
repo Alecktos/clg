@@ -1,9 +1,9 @@
 package game
 
 import (
+	"github.com/Alecktos/clg/input"
 	"github.com/Alecktos/clg/view"
 	"github.com/hajimehoshi/ebiten/v2"
-	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 )
 
 var (
@@ -13,11 +13,18 @@ var (
 type ClgGame struct{}
 
 func (g *ClgGame) Update() error {
+	input.Update()
 	return nil
 }
 
 func (g *ClgGame) Draw(screen *ebiten.Image) {
-	ebitenutil.DebugPrint(screen, "Hello, World!")
+	// ebitenutil.DebugPrint(screen, "Hello, World!"+strconv.Itoa(len(input.GetTouchIDs())))
+
+	//for _, v := range touch.GetTouchIDs() {
+	// ebitenutil.DebugPrint(screen, "Hello, World!")
+	// ebitenutil.DebugPrint(screen, "TouchID:"+strconv.Itoa(int(v)))
+	//}
+
 	clgSprite.Draw(screen)
 }
 
