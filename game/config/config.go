@@ -1,4 +1,4 @@
-package misc
+package config
 
 type DeviceType int64
 

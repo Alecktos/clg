@@ -7,6 +7,10 @@ import (
 	_ "image/png" // All the sudden I needed this. Might not work in iOS??
 )
 
+func LoadBrickColorsImage() (*ebiten.Image, error) {
+	return loadSingleImage(brick_colors_png)
+}
+
 func LoadBrickImage() (*ebiten.Image, error) {
 	return loadSingleImage(brick_png)
 }

@@ -1,40 +1,44 @@
 package input
 
 import (
-	"github.com/Alecktos/clg/misc"
+	"github.com/Alecktos/clg/game/common"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
 )
 
 var (
-	justPressedMouseButton  bool
+	mouseButtonIsPressed    bool
 	justReleasedMouseButton bool
 )
 
 type mouse struct{}
 
 func (m *mouse) update() {
-	justPressedMouseButton = inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft)
 	justReleasedMouseButton = inpututil.IsMouseButtonJustReleased(ebiten.MouseButtonLeft)
+	if mouseButtonIsPressed == true {
+		mouseButtonIsPressed = !justReleasedMouseButton
+	} else {
+		mouseButtonIsPressed = inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft)
+	}
 }
 
-func (m *mouse) hasJustPressed() bool {
-	return justPressedMouseButton
+func (m *mouse) isPressed() bool {
+	return mouseButtonIsPressed
 }
 
 func (m *mouse) hasJustReleased() bool {
 	return justReleasedMouseButton
 }
 
-func (m *mouse) position() misc.Position {
+func (m *mouse) position() common.Position {
 	x, y := ebiten.CursorPosition()
-	return misc.Position{
+	return common.Position{
 		X: x,
 		Y: y,
 	}
 }
 
 func init() {
-	justPressedMouseButton = false
+	mouseButtonIsPressed = false
 	justReleasedMouseButton = false
 }

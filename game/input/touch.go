@@ -1,7 +1,7 @@
 package input
 
 import (
-	"github.com/Alecktos/clg/misc"
+	"github.com/Alecktos/clg/game/common"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
 )
@@ -25,13 +25,13 @@ func (t *touch) hasJustReleased() bool {
 	return inpututil.IsTouchJustReleased(firstPressedTouchId)
 }
 
-func (t *touch) hasJustPressed() bool {
+func (t *touch) isPressed() bool {
 	return len(justPressedTouchIds) > 0
 }
 
-func (t *touch) position() misc.Position {
+func (t *touch) position() common.Position {
 	x, y := ebiten.TouchPosition(firstPressedTouchId)
-	return misc.Position{
+	return common.Position{
 		X: x,
 		Y: y,
 	}

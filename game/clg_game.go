@@ -1,13 +1,12 @@
 package game
 
 import (
-	"github.com/Alecktos/clg/input"
-	"github.com/Alecktos/clg/view"
+	"github.com/Alecktos/clg/game/input"
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
 var (
-	clgSprite *view.ClgSprite = view.NewClgSprite()
+	clgSprite *ClgSprite = NewClgSprite()
 )
 
 type ClgGame struct{}
