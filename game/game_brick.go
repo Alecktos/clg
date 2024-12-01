@@ -5,7 +5,6 @@ import (
 	"github.com/Alecktos/clg/game/common"
 	"github.com/Alecktos/clg/game/input"
 	"github.com/hajimehoshi/ebiten/v2"
-	"log"
 )
 
 type ClgSprite struct {
@@ -30,17 +29,14 @@ func (c *ClgSprite) Draw(screen *ebiten.Image) {
 	}
 }
 
-// TODO: Handle error on top level with graphics
-func (c *ClgSprite) loadImage() {
+func (c *ClgSprite) loadImage() error {
 	var err error
 	image, err := images.LoadBrickColorsImage()
 	c.Img = image
-	if err != nil {
-		log.Fatal(err)
-	}
+	return err
 }
 
-func NewClgSprite() *ClgSprite {
+func NewClgSprite() (*ClgSprite, error) {
 	clgImage := &ClgSprite{
 		Rectangle: common.Rectangle{
 			Position: common.Position{
@@ -51,6 +47,6 @@ func NewClgSprite() *ClgSprite {
 			Height: 200,
 		},
 	}
-	clgImage.loadImage()
-	return clgImage
+	err := clgImage.loadImage()
+	return clgImage, err
 }

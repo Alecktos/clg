@@ -1,12 +1,14 @@
 package game
 
 import (
+	"fmt"
 	"github.com/Alecktos/clg/game/input"
 	"github.com/hajimehoshi/ebiten/v2"
+	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 )
 
 var (
-	clgSprite *ClgSprite = NewClgSprite()
+	clgSprite, err = NewClgSprite()
 )
 
 type ClgGame struct{}
@@ -17,6 +19,10 @@ func (g *ClgGame) Update() error {
 }
 
 func (g *ClgGame) Draw(screen *ebiten.Image) {
+	if err != nil {
+		ebitenutil.DebugPrint(screen, "Error loading image")
+		return
+	}
 	// ebitenutil.DebugPrint(screen, "Hello, World!"+strconv.Itoa(len(input.GetTouchIDs())))
 
 	//for _, v := range touch.GetTouchIDs() {
@@ -27,6 +33,10 @@ func (g *ClgGame) Draw(screen *ebiten.Image) {
 	clgSprite.Draw(screen)
 }
 
+// Automatically scales.
 func (g *ClgGame) Layout(outsideWidth, outsideHeight int) (screenWidth, screenHeight int) {
-	return 320, 240
+	fmt.Println(outsideWidth, outsideHeight)
+	// 1290/4, 2796/4
+	// return 320, 240
+	return outsideWidth, outsideHeight
 }
