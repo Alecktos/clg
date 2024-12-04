@@ -7,4 +7,4 @@ const (
 	DeviceTypeDesktop
 )
 
-const CurrentDevice DeviceType = DeviceTypeDesktop
+const CurrentDevice DeviceType = DeviceTypeMobile
