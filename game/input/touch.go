@@ -23,7 +23,9 @@ func (t *touch) update() {
 	fmt.Println("Before update end-----------------")
 	justPressedTouchIds = inpututil.AppendJustPressedTouchIDs(justPressedTouchIds)
 	justReleasedTouchIds = inpututil.AppendJustReleasedTouchIDs(justReleasedTouchIds)
-	firstPressedTouchId = justPressedTouchIds[0]
+	if len(justPressedTouchIds) > 0 {
+		firstPressedTouchId = justPressedTouchIds[0]
+	}
 	fmt.Println("After update start -----------------")
 	fmt.Println("justPressedTouchIds: ", justPressedTouchIds)
 	fmt.Println("justReleasedTouchIds: ", justReleasedTouchIds)
