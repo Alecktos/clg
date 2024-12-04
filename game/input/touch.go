@@ -1,6 +1,7 @@
 package input
 
 import (
+	"fmt"
 	"github.com/Alecktos/clg/game/common"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
@@ -16,9 +17,17 @@ type touch struct{}
 
 func (t *touch) update() {
 	//TODO: Behöver jag rensa innan. printa ut resultatet här
+	fmt.Println("Before update start -----------------")
+	fmt.Println("justPressedTouchIds: ", justPressedTouchIds)
+	fmt.Println("justReleasedTouchIds: ", justReleasedTouchIds)
+	fmt.Println("Before update end-----------------")
 	justPressedTouchIds = inpututil.AppendJustPressedTouchIDs(justPressedTouchIds)
 	justReleasedTouchIds = inpututil.AppendJustReleasedTouchIDs(justReleasedTouchIds)
 	firstPressedTouchId = justPressedTouchIds[0]
+	fmt.Println("After update start -----------------")
+	fmt.Println("justPressedTouchIds: ", justPressedTouchIds)
+	fmt.Println("justReleasedTouchIds: ", justReleasedTouchIds)
+	fmt.Println("After update end-----------------")
 }
 
 func (t *touch) hasJustReleased() bool {

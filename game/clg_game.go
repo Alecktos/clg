@@ -1,7 +1,6 @@
 package game
 
 import (
-	"fmt"
 	"github.com/Alecktos/clg/game/input"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
@@ -35,7 +34,7 @@ func (g *ClgGame) Draw(screen *ebiten.Image) {
 
 // Automatically scales.
 func (g *ClgGame) Layout(outsideWidth, outsideHeight int) (screenWidth, screenHeight int) {
-	fmt.Println(outsideWidth, outsideHeight)
+	// fmt.Println(outsideWidth, outsideHeight)
 	// 1290/4, 2796/4
 	// return 320, 240
 	return outsideWidth, outsideHeight
