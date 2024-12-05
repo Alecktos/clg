@@ -30,9 +30,9 @@ func (m *mouse) hasJustReleased() bool {
 	return justReleasedMouseButton
 }
 
-func (m *mouse) position() common.Position {
+func (m *mouse) position() *common.Position {
 	x, y := ebiten.CursorPosition()
-	return common.Position{
+	return &common.Position{
 		X: x,
 		Y: y,
 	}

@@ -9,7 +9,7 @@ type inputDevice interface {
 	update()
 	isPressed() bool
 	hasJustReleased() bool
-	position() common.Position
+	position() *common.Position
 }
 
 var (
@@ -28,7 +28,7 @@ func hasJustReleased() bool {
 	return device.hasJustReleased()
 }
 
-func Position() common.Position {
+func Position() *common.Position {
 	return device.position()
 }
 
