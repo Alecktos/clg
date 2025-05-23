@@ -6,7 +6,6 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
-// TODO: rename brick
 type GameBrick struct {
 	Img *ebiten.Image
 	common.Rectangle
