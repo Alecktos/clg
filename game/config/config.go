@@ -7,4 +7,9 @@ const (
 	DeviceTypeDesktop
 )
 
-const CurrentDevice DeviceType = DeviceTypeMobile
+const (
+	WindowWidth  = 1290 / 4
+	WindowHeight = 2532 / 4
+)
+
+const CurrentDevice DeviceType = DeviceTypeDesktop

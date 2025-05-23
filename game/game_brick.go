@@ -6,16 +6,17 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
-type ClgSprite struct {
+// TODO: rename brick
+type GameBrick struct {
 	Img *ebiten.Image
 	common.Rectangle
 }
 
-func (c *ClgSprite) Update() {
+func (c *GameBrick) Update() {
 
 }
 
-func (c *ClgSprite) Draw(screen *ebiten.Image) {
+func (c *GameBrick) Draw(screen *ebiten.Image) {
 	//if input.IsPressed() && c.Contains(input.Position()) { does not work on phone
 	op := &ebiten.DrawImageOptions{}
 	imgSourceSize := c.Img.Bounds().Size()
@@ -28,22 +29,19 @@ func (c *ClgSprite) Draw(screen *ebiten.Image) {
 	//}
 }
 
-func (c *ClgSprite) loadImage() error {
+func (c *GameBrick) loadImage() error {
 	var err error
-	image, err := images.LoadBrickColorsImage()
+	image, err := images.LoadBrickImage()
 	c.Img = image
 	return err
 }
 
-func NewClgSprite() (*ClgSprite, error) {
-	clgImage := &ClgSprite{
+func NewGameBrick() (*GameBrick, error) {
+	clgImage := &GameBrick{
 		Rectangle: common.Rectangle{
-			Position: common.Position{
-				X: 0,
-				Y: 0,
-			},
-			Width:  200,
-			Height: 200,
+			Position: common.Position{X: 0, Y: 0},
+			Width:    75,
+			Height:   75,
 		},
 	}
 	err := clgImage.loadImage()

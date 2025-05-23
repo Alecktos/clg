@@ -1,14 +1,16 @@
 package main
 
 import (
-	"github.com/Alecktos/clg/game"
-	"github.com/hajimehoshi/ebiten/v2"
 	"log"
+
+	"github.com/Alecktos/clg/game"
+	"github.com/Alecktos/clg/game/config"
+	"github.com/hajimehoshi/ebiten/v2"
 )
 
 func main() {
 	// does nothing on phone
-	ebiten.SetWindowSize(1290/4, 2796/4)
+	ebiten.SetWindowSize(config.WindowWidth, config.WindowHeight)
 
 	ebiten.SetWindowTitle("Hello, World!")
 	if err := ebiten.RunGame(&game.ClgGame{}); err != nil {
