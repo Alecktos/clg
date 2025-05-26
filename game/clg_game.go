@@ -27,7 +27,7 @@ func (g *ClgGame) Draw(screen *ebiten.Image) {
 		if loadError != nil {
 			errorMessage = loadError.Error()
 		}
-		scenes.DrawGameErrorScene(screen, errorMessage)
+		scenes.DrawErrorScene(screen, errorMessage)
 		return
 	}
 	// ebitenutil.DebugPrint(screen, "Hello, World!"+strconv.Itoa(len(input.GetTouchIDs())))

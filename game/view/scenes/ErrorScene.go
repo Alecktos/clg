@@ -7,7 +7,7 @@ import (
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 )
 
-func DrawGameErrorScene(screen *ebiten.Image, error string) {
+func DrawErrorScene(screen *ebiten.Image, error string) {
 	screen.Fill(config.MidnightBlue())
 	text.DrawErrorMessage(screen)
 	if config.DEV_MODE {
