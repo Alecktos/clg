@@ -12,7 +12,10 @@ func main() {
 	// does nothing on phone
 	ebiten.SetWindowSize(config.WindowWidth, config.WindowHeight)
 
-	ebiten.SetWindowTitle("Hello, World!")
+	if config.DEV_MODE {
+		ebiten.SetWindowTitle("Hello, World!")
+	}
+
 	if err := ebiten.RunGame(game.NewClgGame()); err != nil {
 		log.Fatal(err)
 	}
