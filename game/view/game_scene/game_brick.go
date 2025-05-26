@@ -1,6 +1,8 @@
 package game_scene
 
 import (
+	"image/color"
+
 	"github.com/Alecktos/clg/assets/images"
 	"github.com/Alecktos/clg/game/common"
 	"github.com/Alecktos/clg/game/input"
@@ -39,7 +41,6 @@ func (c *GameBrick) Update() {
 }
 
 func (c *GameBrick) Draw(screen *ebiten.Image) {
-	//if input.IsPressed() && c.Contains(input.Position()) { does not work on phone
 	op := &ebiten.DrawImageOptions{}
 	imgSourceSize := c.Img.Bounds().Size()
 	scaleX := float64(c.Width) / float64(imgSourceSize.X)
@@ -47,8 +48,11 @@ func (c *GameBrick) Draw(screen *ebiten.Image) {
 	op.GeoM.Scale(scaleX, scaleY)
 	op.GeoM.Translate(float64(c.Position.X), float64(c.Position.Y))
 
+	if c.isPressed {
+		op.ColorScale.ScaleWithColor(color.RGBA{R: 100, G: 100, B: 100, A: 255})
+	}
+
 	screen.DrawImage(c.Img, op)
-	//}
 }
 
 func (c *GameBrick) loadImage() error {
