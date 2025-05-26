@@ -1,13 +1,11 @@
 package game
 
 import (
-	"fmt"
-	"image/color"
-
+	"github.com/Alecktos/clg/assets/fonts"
 	"github.com/Alecktos/clg/game/config"
 	"github.com/Alecktos/clg/game/input"
+	"github.com/Alecktos/clg/game/view/scenes"
 	"github.com/hajimehoshi/ebiten/v2"
-	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 )
 
 var (
@@ -23,14 +21,16 @@ func (g *ClgGame) Update() error {
 }
 
 func (g *ClgGame) Draw(screen *ebiten.Image) {
-	screen.Fill(color.RGBA{R: 40, G: 40, B: 40, A: 0}) // NOt sure alpha is correct
+	// screen.Fill(color.RGBA{R: 40, G: 40, B: 40, A: 0}) // NOt sure alpha is correct
 	if loadError != nil {
-		//TODO: Print something pretty on screen
-		ebitenutil.DebugPrint(screen, "Error loading image")
+		errorMessage := ""
+		if loadError != nil {
+			errorMessage = loadError.Error()
+		}
+		scenes.DrawGameErrorScene(screen, errorMessage)
 		return
 	}
 	// ebitenutil.DebugPrint(screen, "Hello, World!"+strconv.Itoa(len(input.GetTouchIDs())))
-
 	//for _, v := range touch.GetTouchIDs() {
 	// ebitenutil.DebugPrint(screen, "Hello, World!")
 	// ebitenutil.DebugPrint(screen, "TouchID:"+strconv.Itoa(int(v)))
@@ -64,7 +64,6 @@ func loadGameBricks() {
 }
 
 func init() {
-	fmt.Println("init")
 	for index, _ := range bricks {
 		brick, err := NewGameBrick()
 		if err != nil {
@@ -72,5 +71,9 @@ func init() {
 			break
 		}
 		bricks[index] = brick
+	}
+	loadError = fonts.LoadFonts()
+	if loadError != nil {
+		return
 	}
 }
