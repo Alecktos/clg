@@ -1,4 +1,4 @@
-package text
+package error_scene
 
 import (
 	"github.com/Alecktos/clg/assets/fonts"

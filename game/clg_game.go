@@ -4,12 +4,13 @@ import (
 	"github.com/Alecktos/clg/assets/fonts"
 	"github.com/Alecktos/clg/game/config"
 	"github.com/Alecktos/clg/game/input"
-	"github.com/Alecktos/clg/game/view/scenes"
+	"github.com/Alecktos/clg/game/view/error_scene"
+	"github.com/Alecktos/clg/game/view/game_scene"
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
 type ClgGame struct {
-	gameScene *scenes.GameScene
+	gameScene *game_scene.GameScene
 	loadError error
 }
 
@@ -24,7 +25,7 @@ func (g *ClgGame) load() {
 	if g.loadError != nil {
 		return
 	}
-	g.gameScene, g.loadError = scenes.NewGameScene()
+	g.gameScene, g.loadError = game_scene.NewGameScene()
 	if g.loadError != nil {
 		return
 	}
@@ -37,12 +38,12 @@ func (g *ClgGame) Update() error {
 
 func (g *ClgGame) Draw(screen *ebiten.Image) {
 	// screen.Fill(color.RGBA{R: 40, G: 40, B: 40, A: 0}) // NOt sure alpha is correct
-	if g.loadError != nil {
+	if g.loadError == nil {
 		errorMessage := ""
 		if g.loadError != nil {
 			errorMessage = g.loadError.Error()
 		}
-		scenes.DrawErrorScene(screen, errorMessage)
+		error_scene.DrawErrorScene(screen, errorMessage)
 		return
 	}
 

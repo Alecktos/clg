@@ -1,4 +1,4 @@
-package view
+package game_scene
 
 import (
 	"github.com/Alecktos/clg/assets/images"

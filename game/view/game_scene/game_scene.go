@@ -1,13 +1,12 @@
-package scenes
+package game_scene
 
 import (
 	"github.com/Alecktos/clg/game/config"
-	"github.com/Alecktos/clg/game/view"
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
 type GameScene struct {
-	bricks [9]*view.GameBrick
+	bricks [9]*GameBrick
 }
 
 func NewGameScene() (*GameScene, error) {
@@ -23,13 +22,13 @@ func (s *GameScene) loadGameBricks() error {
 	spacing := 25
 
 	// Beräkna total bredd för kolumner och startposition för centrerad layout
-	totalWidth := columns*view.GAME_BRICK_WIDTH + (columns-1)*spacing
+	totalWidth := columns*GAME_BRICK_WIDTH + (columns-1)*spacing
 	startX := (config.WindowWidth - totalWidth) / 2
 	x, y := startX, 75
 
 	for index, _ := range s.bricks {
 
-		brick, err := view.NewGameBrick()
+		brick, err := NewGameBrick()
 		if err != nil {
 			loadError = err
 			break
@@ -37,12 +36,12 @@ func (s *GameScene) loadGameBricks() error {
 
 		brick.Position.X = x
 		brick.Position.Y = y
-		x += view.GAME_BRICK_WIDTH + spacing
+		x += GAME_BRICK_WIDTH + spacing
 
 		// Gå till nästa rad efter varje tredje bricka
 		if (index+1)%columns == 0 {
 			x = startX
-			y += view.GAME_BRICK_HEIGHT + spacing
+			y += GAME_BRICK_HEIGHT + spacing
 		}
 		s.bricks[index] = brick
 	}
