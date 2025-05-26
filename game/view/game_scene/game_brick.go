@@ -3,19 +3,39 @@ package game_scene
 import (
 	"github.com/Alecktos/clg/assets/images"
 	"github.com/Alecktos/clg/game/common"
+	"github.com/Alecktos/clg/game/input"
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
 type GameBrick struct {
 	Img *ebiten.Image
 	common.Rectangle
+	isPressed  bool
+	hasPressed bool
 }
 
 const GAME_BRICK_WIDTH = 75
 const GAME_BRICK_HEIGHT = 75
 
-func (c *GameBrick) Update() {
+func NewGameBrick() (*GameBrick, error) {
+	clgImage := &GameBrick{
+		Rectangle: common.Rectangle{
+			Position: common.Position{X: 0, Y: 0},
+			Width:    GAME_BRICK_WIDTH,
+			Height:   GAME_BRICK_HEIGHT,
+		},
+	}
+	err := clgImage.loadImage()
+	return clgImage, err
+}
 
+func (c *GameBrick) Update() {
+	if c.isPressed == true && input.IsPressed() == false && c.Contains(*input.Position()) { //has released
+		c.hasPressed = true
+	} else {
+		c.hasPressed = false
+	}
+	c.isPressed = input.IsPressed() && c.Contains(*input.Position())
 }
 
 func (c *GameBrick) Draw(screen *ebiten.Image) {
@@ -38,14 +58,6 @@ func (c *GameBrick) loadImage() error {
 	return err
 }
 
-func NewGameBrick() (*GameBrick, error) {
-	clgImage := &GameBrick{
-		Rectangle: common.Rectangle{
-			Position: common.Position{X: 0, Y: 0},
-			Width:    GAME_BRICK_WIDTH,
-			Height:   GAME_BRICK_HEIGHT,
-		},
-	}
-	err := clgImage.loadImage()
-	return clgImage, err
+func (c *GameBrick) clicked() bool {
+	return c.hasPressed
 }

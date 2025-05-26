@@ -1,6 +1,8 @@
 package game_scene
 
 import (
+	"fmt"
+
 	"github.com/Alecktos/clg/game/config"
 	"github.com/hajimehoshi/ebiten/v2"
 )
@@ -51,5 +53,14 @@ func (s *GameScene) loadGameBricks() error {
 func (s *GameScene) Draw(screen *ebiten.Image) {
 	for _, brick := range s.bricks {
 		brick.Draw(screen)
+	}
+}
+
+func (s *GameScene) Update() {
+	for _, brick := range s.bricks {
+		brick.Update()
+		if brick.clicked() {
+			fmt.Println("clicked a brick")
+		}
 	}
 }

@@ -33,6 +33,7 @@ func (g *ClgGame) load() {
 
 func (g *ClgGame) Update() error {
 	input.Update()
+	g.gameScene.Update()
 	return nil
 }
 
