@@ -38,7 +38,7 @@ func (g *ClgGame) Update() error {
 
 func (g *ClgGame) Draw(screen *ebiten.Image) {
 	// screen.Fill(color.RGBA{R: 40, G: 40, B: 40, A: 0}) // NOt sure alpha is correct
-	if g.loadError == nil {
+	if g.loadError != nil {
 		errorMessage := ""
 		if g.loadError != nil {
 			errorMessage = g.loadError.Error()
