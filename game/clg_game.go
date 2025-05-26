@@ -4,17 +4,31 @@ import (
 	"github.com/Alecktos/clg/assets/fonts"
 	"github.com/Alecktos/clg/game/config"
 	"github.com/Alecktos/clg/game/input"
-	"github.com/Alecktos/clg/game/view"
 	"github.com/Alecktos/clg/game/view/scenes"
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
-var (
-	bricks    [9]*view.GameBrick
+type ClgGame struct {
+	gameScene *scenes.GameScene
 	loadError error
-)
+}
 
-type ClgGame struct{}
+func NewClgGame() *ClgGame {
+	clgGame := &ClgGame{}
+	clgGame.load()
+	return clgGame
+}
+
+func (g *ClgGame) load() {
+	g.loadError = fonts.LoadFonts()
+	if g.loadError != nil {
+		return
+	}
+	g.gameScene, g.loadError = scenes.NewGameScene()
+	if g.loadError != nil {
+		return
+	}
+}
 
 func (g *ClgGame) Update() error {
 	input.Update()
@@ -23,22 +37,25 @@ func (g *ClgGame) Update() error {
 
 func (g *ClgGame) Draw(screen *ebiten.Image) {
 	// screen.Fill(color.RGBA{R: 40, G: 40, B: 40, A: 0}) // NOt sure alpha is correct
-	if loadError != nil {
+	if g.loadError != nil {
 		errorMessage := ""
-		if loadError != nil {
-			errorMessage = loadError.Error()
+		if g.loadError != nil {
+			errorMessage = g.loadError.Error()
 		}
 		scenes.DrawErrorScene(screen, errorMessage)
 		return
 	}
+
+	g.gameScene.Draw(screen)
+
 	// ebitenutil.DebugPrint(screen, "Hello, World!"+strconv.Itoa(len(input.GetTouchIDs())))
 	//for _, v := range touch.GetTouchIDs() {
 	// ebitenutil.DebugPrint(screen, "Hello, World!")
 	// ebitenutil.DebugPrint(screen, "TouchID:"+strconv.Itoa(int(v)))
 	//}
-	for _, brick := range bricks {
-		brick.Draw(screen)
-	}
+	//for _, brick := range bricks {
+	//	brick.Draw(screen)
+	//}
 }
 
 // Automatically scales.
@@ -51,30 +68,5 @@ func (g *ClgGame) Layout(outsideWidth, outsideHeight int) (screenWidth, screenHe
 	return config.WindowWidth, config.WindowHeight
 }
 
-func loadGameBricks() {
-	x, y := 25, 75
-	for index, _ := range bricks {
-		bricks[index].Position.X = x
-		bricks[index].Position.Y = x
-		x += 25
-		if x > 75 {
-			y += 75
-			x = 25
-		}
-	}
-}
-
 func init() {
-	for index, _ := range bricks {
-		brick, err := view.NewGameBrick()
-		if err != nil {
-			loadError = err
-			break
-		}
-		bricks[index] = brick
-	}
-	loadError = fonts.LoadFonts()
-	if loadError != nil {
-		return
-	}
 }

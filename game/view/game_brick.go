@@ -11,6 +11,9 @@ type GameBrick struct {
 	common.Rectangle
 }
 
+const GAME_BRICK_WIDTH = 75
+const GAME_BRICK_HEIGHT = 75
+
 func (c *GameBrick) Update() {
 
 }
@@ -39,8 +42,8 @@ func NewGameBrick() (*GameBrick, error) {
 	clgImage := &GameBrick{
 		Rectangle: common.Rectangle{
 			Position: common.Position{X: 0, Y: 0},
-			Width:    75,
-			Height:   75,
+			Width:    GAME_BRICK_WIDTH,
+			Height:   GAME_BRICK_HEIGHT,
 		},
 	}
 	err := clgImage.loadImage()
