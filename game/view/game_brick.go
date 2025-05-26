@@ -1,4 +1,4 @@
-package game
+package view
 
 import (
 	"github.com/Alecktos/clg/assets/images"

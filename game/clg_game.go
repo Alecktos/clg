@@ -4,12 +4,13 @@ import (
 	"github.com/Alecktos/clg/assets/fonts"
 	"github.com/Alecktos/clg/game/config"
 	"github.com/Alecktos/clg/game/input"
+	"github.com/Alecktos/clg/game/view"
 	"github.com/Alecktos/clg/game/view/scenes"
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
 var (
-	bricks    [9]*GameBrick
+	bricks    [9]*view.GameBrick
 	loadError error
 )
 
@@ -65,7 +66,7 @@ func loadGameBricks() {
 
 func init() {
 	for index, _ := range bricks {
-		brick, err := NewGameBrick()
+		brick, err := view.NewGameBrick()
 		if err != nil {
 			loadError = err
 			break
