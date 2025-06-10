@@ -10,8 +10,9 @@ import (
 )
 
 type ClgGame struct {
-	gameScene *game_scene.GameScene
-	loadError error
+	gameScene  *game_scene.GameScene
+	errorScene *error_scene.ErrorScene
+	loadError  error
 }
 
 func NewClgGame() *ClgGame {
@@ -21,6 +22,8 @@ func NewClgGame() *ClgGame {
 }
 
 func (g *ClgGame) load() {
+	g.errorScene = error_scene.NewErrorScene()
+
 	g.loadError = fonts.LoadFonts()
 	if g.loadError != nil {
 		return
@@ -44,7 +47,7 @@ func (g *ClgGame) Draw(screen *ebiten.Image) {
 		if g.loadError != nil {
 			errorMessage = g.loadError.Error()
 		}
-		error_scene.DrawErrorScene(screen, errorMessage)
+		g.errorScene.Draw(screen, errorMessage)
 		return
 	}
 

@@ -2,29 +2,29 @@ package error_scene
 
 import (
 	"github.com/Alecktos/clg/assets/fonts"
-	"github.com/Alecktos/clg/game/config"
+	"github.com/Alecktos/clg/game/view"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
-	"github.com/hajimehoshi/ebiten/v2/text/v2"
 )
 
-func DrawErrorMessage(screen *ebiten.Image) {
-	const errorMessage = `Failed to load game.
+const errorMessageText = `Failed to load game.
 Please try and restart the app.`
 
+type ErrorMessage struct {
+	text *view.Text
+}
+
+func NewErrorMessage() *ErrorMessage {
+	return &ErrorMessage{
+		text: view.NewText(errorMessageText),
+	}
+}
+
+func (errorMessage *ErrorMessage) Draw(screen *ebiten.Image) {
 	if fonts.GameFont == nil {
-		ebitenutil.DebugPrint(screen, errorMessage)
+		ebitenutil.DebugPrint(screen, errorMessageText)
 		return
 	}
 
-	op := text.DrawOptions{}
-	op.GeoM.Translate(20, 20)
-	op.ColorScale.ScaleWithColor(config.ChampagneGold())
-	op.LineSpacing = 25
-	f := text.GoTextFace{
-		Source: fonts.GameFont,
-		Size:   20,
-	}
-
-	text.Draw(screen, errorMessage, &f, &op)
+	errorMessage.text.Draw(screen)
 }

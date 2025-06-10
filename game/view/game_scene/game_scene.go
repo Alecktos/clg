@@ -8,13 +8,21 @@ import (
 )
 
 type GameScene struct {
-	bricks [9]*GameBrick
+	bricks             [9]*GameBrick
+	showChallengeModal bool
+	challengeModal     *ChallengeModal
 }
 
 func NewGameScene() (*GameScene, error) {
 	gameScene := &GameScene{}
-	loadError := gameScene.loadGameBricks()
+	loadError := gameScene.load()
 	return gameScene, loadError
+}
+
+func (s *GameScene) load() error {
+	s.challengeModal = NewChallengeModal()
+	loadError := s.loadGameBricks()
+	return loadError
 }
 
 func (s *GameScene) loadGameBricks() error {
@@ -54,6 +62,10 @@ func (s *GameScene) Draw(screen *ebiten.Image) {
 	for _, brick := range s.bricks {
 		brick.Draw(screen)
 	}
+
+	if s.showChallengeModal {
+		s.challengeModal.Draw(screen)
+	}
 }
 
 func (s *GameScene) Update() {
@@ -61,6 +73,8 @@ func (s *GameScene) Update() {
 		brick.Update()
 		if brick.clicked() {
 			fmt.Println("clicked a brick")
+			// Visa en modal med utmaning
+			s.showChallengeModal = true
 		}
 	}
 }

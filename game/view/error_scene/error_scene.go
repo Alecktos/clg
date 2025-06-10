@@ -6,9 +6,19 @@ import (
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 )
 
-func DrawErrorScene(screen *ebiten.Image, error string) {
+type ErrorScene struct {
+	errorMessage *ErrorMessage
+}
+
+func NewErrorScene() *ErrorScene {
+	return &ErrorScene{
+		errorMessage: NewErrorMessage(),
+	}
+}
+
+func (e *ErrorScene) Draw(screen *ebiten.Image, error string) {
 	screen.Fill(config.MidnightBlue())
-	DrawErrorMessage(screen)
+	e.errorMessage.Draw(screen)
 	if config.DEV_MODE {
 		ebitenutil.DebugPrint(screen, error)
 	}
