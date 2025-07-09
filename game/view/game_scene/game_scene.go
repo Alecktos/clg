@@ -20,7 +20,11 @@ func NewGameScene() (*GameScene, error) {
 }
 
 func (s *GameScene) load() error {
-	s.challengeModal = NewChallengeModal()
+	var err error
+	s.challengeModal, err = NewChallengeModal()
+	if err != nil {
+		return err
+	}
 	loadError := s.loadGameBricks()
 	return loadError
 }

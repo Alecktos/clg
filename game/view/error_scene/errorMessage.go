@@ -11,20 +11,24 @@ const errorMessageText = `Failed to load game.
 Please try and restart the app.`
 
 type ErrorMessage struct {
-	text *view.Text
+	text          *view.Text
+	textLoadError error
 }
 
-func NewErrorMessage() *ErrorMessage {
+func NewErrorMessage() (*ErrorMessage, error) {
+	text, loadError := view.NewCenterAlignedText(errorMessageText, 10)
+
 	return &ErrorMessage{
-		text: view.NewText(errorMessageText),
-	}
+		text:          text,
+		textLoadError: loadError,
+	}, nil
 }
 
-func (errorMessage *ErrorMessage) Draw(screen *ebiten.Image) {
-	if fonts.GameFont == nil {
+func (e *ErrorMessage) Draw(screen *ebiten.Image) {
+	if fonts.GameFont == nil || e.textLoadError != nil {
 		ebitenutil.DebugPrint(screen, errorMessageText)
 		return
 	}
 
-	errorMessage.text.Draw(screen)
+	e.text.Draw(screen)
 }

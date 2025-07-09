@@ -22,9 +22,9 @@ func NewClgGame() *ClgGame {
 }
 
 func (g *ClgGame) load() {
+	g.loadError = fonts.LoadFonts()
 	g.errorScene = error_scene.NewErrorScene()
 
-	g.loadError = fonts.LoadFonts()
 	if g.loadError != nil {
 		return
 	}

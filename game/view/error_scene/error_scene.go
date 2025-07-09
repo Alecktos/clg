@@ -11,8 +11,9 @@ type ErrorScene struct {
 }
 
 func NewErrorScene() *ErrorScene {
+	errorMessage, _ := NewErrorMessage()
 	return &ErrorScene{
-		errorMessage: NewErrorMessage(),
+		errorMessage: errorMessage,
 	}
 }
 

@@ -3,6 +3,8 @@ package game_scene
 import (
 	"image/color"
 
+	"github.com/Alecktos/clg/game/common"
+	"github.com/Alecktos/clg/game/config"
 	"github.com/Alecktos/clg/game/view"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/vector"
@@ -11,33 +13,47 @@ import (
 type ChallengeModal struct {
 	whiteImage    *ebiten.Image
 	challengeText *view.Text
+	rectangle     *common.Rectangle
 }
 
-func NewChallengeModal() *ChallengeModal {
+func NewChallengeModal() (*ChallengeModal, error) {
 	whiteImage := ebiten.NewImage(1, 1)
 	whiteImage.Fill(color.White)
+
+	width := int(config.WindowWidth - 60)
+	height := int(300)
+	x1 := int(30)
+	y1 := int(config.WindowHeight/2 - height/2)
+
+	challengeText, err := view.NewCenterAlignedText("Here is challenge for you", y1)
+	if err != nil {
+		return nil, err
+	}
+
 	return &ChallengeModal{
 		whiteImage:    whiteImage,
-		challengeText: view.NewText("Here is challenge for you"),
-	}
+		challengeText: challengeText,
+		rectangle:     &common.Rectangle{Position: common.Position{X: x1, Y: y1}, Width: width, Height: height},
+	}, nil
 }
 
 func (cm *ChallengeModal) Draw(screen *ebiten.Image) {
 
-	x1 := float32(30)
-	y1 := float32(30)
-	width1 := float32(300)
-	height1 := float32(500)
 	radius1 := float32(25)
 	color1 := color.RGBA{R: 0, G: 128, B: 255, A: 255} // Blue color
 
-	cm.drawRoundedRectManually(screen, x1, y1, width1, height1, radius1, color1)
+	cm.drawRoundedRectManually(screen, radius1, color1)
 
 	// Draw challengeText in the rectangle
 	cm.challengeText.Draw(screen)
 }
 
-func (cm *ChallengeModal) drawRoundedRectManually(screen *ebiten.Image, x, y, width, height, radius float32, clr color.Color) {
+func (cm *ChallengeModal) drawRoundedRectManually(screen *ebiten.Image, radius float32, clr color.Color) {
+	x := float32(cm.rectangle.Position.X)
+	y := float32(cm.rectangle.Position.Y)
+	width := float32(cm.rectangle.Width)
+	height := float32(cm.rectangle.Height)
+
 	// 1. Define Rounded Rectangle Path
 	var p vector.Path
 	p.MoveTo(x+radius, y)                                 // Starting point top edge, after the first corner

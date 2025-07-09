@@ -2,7 +2,6 @@ package view
 
 import (
 	"errors"
-
 	"github.com/Alecktos/clg/assets/fonts"
 	"github.com/Alecktos/clg/game/config"
 	"github.com/hajimehoshi/ebiten/v2"
@@ -11,28 +10,37 @@ import (
 
 type Text struct {
 	text string
+	op   *text.DrawOptions
+	f    *text.GoTextFace
 }
 
-func NewText(text string) *Text {
-	return &Text{
-		text: text,
-	}
-}
-
-func (t *Text) Draw(screen *ebiten.Image) error {
+func NewCenterAlignedText(alignedText string, y int) (*Text, error) {
 	if fonts.GameFont == nil {
-		return errors.New("font not loaded correctly")
+		return nil, errors.New("font not loaded correctly")
 	}
 
-	op := text.DrawOptions{}
-	op.GeoM.Translate(20, 20)
-	op.ColorScale.ScaleWithColor(config.ChampagneGold())
-	op.LineSpacing = 25
-	f := text.GoTextFace{
+	f := &text.GoTextFace{
 		Source: fonts.GameFont,
 		Size:   20,
 	}
 
-	text.Draw(screen, t.text, &f, &op)
+	lineSpacing := 25.0
+	width, _ := text.Measure(alignedText, f, lineSpacing)
+
+	op := text.DrawOptions{}
+	op.LineSpacing = lineSpacing
+
+	op.GeoM.Translate(config.WindowWidth/2-width/2, 20)
+	op.ColorScale.ScaleWithColor(config.ChampagneGold())
+
+	return &Text{
+		text: alignedText,
+		op:   &op,
+		f:    f,
+	}, nil
+}
+
+func (t *Text) Draw(screen *ebiten.Image) error {
+	text.Draw(screen, t.text, t.f, t.op)
 	return nil
 }
