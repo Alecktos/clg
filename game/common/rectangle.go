@@ -5,6 +5,14 @@ type Rectangle struct {
 	Width, Height float64
 }
 
+func NewRectangle(x, y, width, height float64) Rectangle {
+	return Rectangle{
+		Position: Position{X: x, Y: y},
+		Width:    width,
+		Height:   height,
+	}
+}
+
 func (r *Rectangle) Contains(position Position) bool {
 	// fmt.Println("input Position: ", position)
 	// fmt.Println("Rectangle Position: ", r.Position, "Rectangle Width: ", r.Width, "Rectangle Height: ", r.Height)
