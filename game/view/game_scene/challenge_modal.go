@@ -21,7 +21,7 @@ func newChallengeModal() (*challengeModal, error) {
 
 	backgroundRectangle := common.Rectangle{Position: common.Position{X: x1, Y: y1}, Width: width, Height: height}
 
-	challengeText, err := view.NewCenterAlignedText("Here is challenge for you", y1+20)
+	challengeText, err := view.NewCenterAlignedText("Here is challenge for you", y1+20, config.STANDARD_FONT_SIZE)
 	if err != nil {
 		return nil, err
 	}

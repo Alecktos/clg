@@ -2,6 +2,7 @@ package error_scene
 
 import (
 	"github.com/Alecktos/clg/assets/fonts"
+	"github.com/Alecktos/clg/game/config"
 	"github.com/Alecktos/clg/game/view"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
@@ -16,7 +17,7 @@ type ErrorMessage struct {
 }
 
 func NewErrorMessage() (*ErrorMessage, error) {
-	text, loadError := view.NewCenterAlignedText(errorMessageText, 10.0)
+	text, loadError := view.NewCenterAlignedText(errorMessageText, 10.0, config.STANDARD_FONT_SIZE)
 
 	return &ErrorMessage{
 		text:          text,

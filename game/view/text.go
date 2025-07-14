@@ -14,17 +14,17 @@ type Text struct {
 	f    *text.GoTextFace
 }
 
-func NewCenterAlignedText(alignedText string, y float64) (*Text, error) {
+func NewCenterAlignedText(alignedText string, y float64, fontSize float64) (*Text, error) {
 	if fonts.GameFont == nil {
 		return nil, errors.New("font not loaded correctly")
 	}
 
 	f := &text.GoTextFace{
 		Source: fonts.GameFont,
-		Size:   20,
+		Size:   fontSize,
 	}
 
-	lineSpacing := 25.0
+	lineSpacing := fontSize + 5
 	width, _ := text.Measure(alignedText, f, lineSpacing)
 
 	op := text.DrawOptions{}

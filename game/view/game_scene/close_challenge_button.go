@@ -11,10 +11,11 @@ import (
 type closeChallengeButton struct {
 	backgroundRectangle view.RoundedRectangle
 	buttonModel         view_model.ButtonModel
+	text                *view.Text
 }
 
 func newCloseChallengeButton(parentRectangle common.Rectangle) (*closeChallengeButton, error) {
-	width := 100.0
+	width := 150.0
 	height := 50.0
 
 	position := common.Position{X: parentRectangle.HorizontalCenter() - width/2, Y: parentRectangle.BottomY() - height - 10}
@@ -25,8 +26,14 @@ func newCloseChallengeButton(parentRectangle common.Rectangle) (*closeChallengeB
 		return nil, err
 	}
 
+	text, _ := view.NewCenterAlignedText("Close", rectangle.Position.Y+rectangle.Height/2-config.STANDARD_FONT_SIZE/2, config.STANDARD_FONT_SIZE)
+	if err != nil {
+		return nil, err
+	}
+
 	return &closeChallengeButton{
 		backgroundRectangle: backgroundRectangle,
+		text:                text,
 	}, nil
 }
 
@@ -36,4 +43,5 @@ func (c *closeChallengeButton) update() {
 
 func (c *closeChallengeButton) draw(screen *ebiten.Image) {
 	c.backgroundRectangle.Draw(screen)
+	c.text.Draw(screen)
 }

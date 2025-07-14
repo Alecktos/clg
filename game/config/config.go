@@ -16,25 +16,9 @@ const (
 	DEV_MODE = true
 )
 
-// Old Theme Colors
-
-//func DarkBrownColor() color.RGBA {
-//	return color.RGBA{
-//		R: 52,
-//		G: 18,
-//		B: 12,
-//	}
-//}
-//
-//func RedColor() color.RGBA {
-//	return color.RGBA{
-//		R: 168,
-//		G: 31,
-//		B: 61,
-//	}
-//}
-
-// New Theme Colors
+const (
+	STANDARD_FONT_SIZE = 20
+)
 
 // -- Primary Colors --
 
