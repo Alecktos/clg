@@ -9,6 +9,7 @@ import (
 
 type RoundedRectangle interface {
 	Draw(image *ebiten.Image)
+	GetRectangle() *common.Rectangle
 }
 
 type roundedRectangle struct {
@@ -32,6 +33,10 @@ func NewRoundedRectangle(rectangle common.Rectangle, radius float32, backgroundC
 
 func (r *roundedRectangle) Draw(image *ebiten.Image) {
 	r.drawRoundedRectManually(image)
+}
+
+func (r *roundedRectangle) GetRectangle() *common.Rectangle {
+	return &r.Rectangle
 }
 
 func (r *roundedRectangle) drawRoundedRectManually(screen *ebiten.Image) {
