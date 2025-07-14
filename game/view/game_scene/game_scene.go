@@ -77,7 +77,7 @@ func (s *GameScene) Draw(screen *ebiten.Image) {
 func (s *GameScene) Update() {
 	for _, brick := range s.bricks {
 		brick.Update()
-		if brick.clicked() {
+		if brick.IsClicked() {
 			fmt.Println("clicked a brick")
 			// Visa en modal med utmaning
 			s.showChallengeModal = true
