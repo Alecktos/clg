@@ -63,6 +63,8 @@ func (s *GameScene) loadGameBricks() error {
 }
 
 func (s *GameScene) Draw(screen *ebiten.Image) {
+	screen.Fill(config.MidnightBlue())
+
 	for _, brick := range s.bricks {
 		brick.Draw(screen)
 	}
