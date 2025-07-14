@@ -25,7 +25,7 @@ func NewChallengeModal() (*ChallengeModal, error) {
 	x1 := 30.0
 	y1 := config.WindowHeight/2 - height/2
 
-	challengeText, err := view.NewCenterAlignedText("Here is challenge for you", y1)
+	challengeText, err := view.NewCenterAlignedText("Here is challenge for you", y1+20)
 	if err != nil {
 		return nil, err
 	}
@@ -39,10 +39,10 @@ func NewChallengeModal() (*ChallengeModal, error) {
 
 func (cm *ChallengeModal) Draw(screen *ebiten.Image) {
 
-	radius1 := float32(25)
-	color1 := color.RGBA{R: 0, G: 128, B: 255, A: 255} // Blue color
+	radius := float32(25)
+	color := config.VelvetPlum()
 
-	cm.drawRoundedRectManually(screen, radius1, color1)
+	cm.drawRoundedRectManually(screen, radius, color)
 
 	// Draw challengeText in the rectangle
 	cm.challengeText.Draw(screen)
