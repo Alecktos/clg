@@ -31,11 +31,11 @@ func newGameBrick() (*gameBrick, error) {
 	return clgImage, err
 }
 
-func (g *gameBrick) Update() {
+func (g *gameBrick) update() {
 	g.buttonModel.Update(g.Rectangle)
 }
 
-func (g *gameBrick) Draw(screen *ebiten.Image) {
+func (g *gameBrick) draw(screen *ebiten.Image) {
 	op := &ebiten.DrawImageOptions{}
 	imgSourceSize := g.Img.Bounds().Size()
 	scaleX := float64(g.Width) / float64(imgSourceSize.X)

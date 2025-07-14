@@ -64,17 +64,17 @@ func (s *GameScene) Draw(screen *ebiten.Image) {
 	screen.Fill(config.MidnightBlue())
 
 	for _, brick := range s.bricks {
-		brick.Draw(screen)
+		brick.draw(screen)
 	}
 
 	if s.showChallengeModal {
-		s.challengeModal.Draw(screen)
+		s.challengeModal.draw(screen)
 	}
 }
 
 func (s *GameScene) Update() {
 	for _, brick := range s.bricks {
-		brick.Update()
+		brick.update()
 		if brick.buttonModel.IsClicked() {
 			// Visa en modal med utmaning
 			s.showChallengeModal = true

@@ -37,14 +37,14 @@ func newChallengeModal() (*challengeModal, error) {
 	}, nil
 }
 
-func (cm *challengeModal) Draw(screen *ebiten.Image) {
+func (cm *challengeModal) draw(screen *ebiten.Image) {
 
 	radius := float32(25)
 	color := config.VelvetPlum()
 
 	cm.drawRoundedRectManually(screen, radius, color)
 
-	// Draw challengeText in the rectangle
+	// draw challengeText in the rectangle
 	cm.challengeText.Draw(screen)
 }
 

@@ -52,15 +52,6 @@ func (g *ClgGame) Draw(screen *ebiten.Image) {
 	}
 
 	g.gameScene.Draw(screen)
-
-	// ebitenutil.DebugPrint(screen, "Hello, World!"+strconv.Itoa(len(input.GetTouchIDs())))
-	//for _, v := range touch.GetTouchIDs() {
-	// ebitenutil.DebugPrint(screen, "Hello, World!")
-	// ebitenutil.DebugPrint(screen, "TouchID:"+strconv.Itoa(int(v)))
-	//}
-	//for _, brick := range bricks {
-	//	brick.Draw(screen)
-	//}
 }
 
 // Automatically scales.
