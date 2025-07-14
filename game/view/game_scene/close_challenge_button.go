@@ -34,6 +34,7 @@ func newCloseChallengeButton(parentRectangle common.Rectangle) (*closeChallengeB
 	return &closeChallengeButton{
 		backgroundRectangle: backgroundRectangle,
 		text:                text,
+		buttonModel:         view_model.NewButtonModel(),
 	}, nil
 }
 

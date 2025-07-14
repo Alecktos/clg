@@ -6,9 +6,8 @@ import (
 )
 
 type GameScene struct {
-	bricks             [9]*gameBrick
-	showChallengeModal bool
-	challengeModal     *challengeModal
+	bricks         [9]*gameBrick
+	challengeModal *challengeModal
 }
 
 func NewGameScene() (*GameScene, error) {
@@ -67,17 +66,16 @@ func (s *GameScene) Draw(screen *ebiten.Image) {
 		brick.draw(screen)
 	}
 
-	if s.showChallengeModal {
-		s.challengeModal.draw(screen)
-	}
+	s.challengeModal.draw(screen)
 }
 
 func (s *GameScene) Update() {
+	s.challengeModal.update()
+
 	for _, brick := range s.bricks {
 		brick.update()
 		if brick.buttonModel.IsClicked() {
-			// Visa en modal med utmaning
-			s.showChallengeModal = true
+			s.challengeModal.isVisible = true
 		}
 	}
 }

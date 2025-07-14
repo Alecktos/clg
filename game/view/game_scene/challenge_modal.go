@@ -11,6 +11,7 @@ type challengeModal struct {
 	challengeText        *view.Text
 	roundedRectangle     view.RoundedRectangle
 	closeChallengeButton *closeChallengeButton
+	isVisible            bool
 }
 
 func newChallengeModal() (*challengeModal, error) {
@@ -40,11 +41,22 @@ func newChallengeModal() (*challengeModal, error) {
 		challengeText:        challengeText,
 		roundedRectangle:     roundedRectangle,
 		closeChallengeButton: closeButton,
+		isVisible:            false,
 	}, nil
 }
 
-func (cm *challengeModal) draw(screen *ebiten.Image) {
-	cm.roundedRectangle.Draw(screen)
-	cm.challengeText.Draw(screen)
-	cm.closeChallengeButton.draw(screen)
+func (c *challengeModal) update() {
+	c.closeChallengeButton.update()
+	if c.closeChallengeButton.buttonModel.IsClicked() {
+		c.isVisible = false
+	}
+}
+
+func (c *challengeModal) draw(screen *ebiten.Image) {
+	if !c.isVisible {
+		return
+	}
+	c.roundedRectangle.Draw(screen)
+	c.challengeText.Draw(screen)
+	c.closeChallengeButton.draw(screen)
 }
