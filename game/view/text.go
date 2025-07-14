@@ -40,7 +40,6 @@ func NewCenterAlignedText(alignedText string, y float64) (*Text, error) {
 	}, nil
 }
 
-func (t *Text) Draw(screen *ebiten.Image) error {
+func (t *Text) Draw(screen *ebiten.Image) {
 	text.Draw(screen, t.text, t.f, t.op)
-	return nil
 }
