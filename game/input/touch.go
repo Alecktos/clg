@@ -39,7 +39,7 @@ func (t *touch) isPressed() bool {
 func (t *touch) position() *common.Position {
 	x, y := ebiten.TouchPosition(firstPressedTouchId)
 	return &common.Position{
-		X: x,
-		Y: y,
+		X: float64(x),
+		Y: float64(y),
 	}
 }

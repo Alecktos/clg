@@ -20,10 +20,10 @@ func NewChallengeModal() (*ChallengeModal, error) {
 	whiteImage := ebiten.NewImage(1, 1)
 	whiteImage.Fill(color.White)
 
-	width := int(config.WindowWidth - 60)
-	height := int(300)
-	x1 := int(30)
-	y1 := int(config.WindowHeight/2 - height/2)
+	width := float64(config.WindowWidth - 60)
+	height := float64(300)
+	x1 := 30.0
+	y1 := config.WindowHeight/2 - height/2
 
 	challengeText, err := view.NewCenterAlignedText("Here is challenge for you", y1)
 	if err != nil {

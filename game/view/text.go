@@ -14,7 +14,7 @@ type Text struct {
 	f    *text.GoTextFace
 }
 
-func NewCenterAlignedText(alignedText string, y int) (*Text, error) {
+func NewCenterAlignedText(alignedText string, y float64) (*Text, error) {
 	if fonts.GameFont == nil {
 		return nil, errors.New("font not loaded correctly")
 	}
@@ -30,7 +30,7 @@ func NewCenterAlignedText(alignedText string, y int) (*Text, error) {
 	op := text.DrawOptions{}
 	op.LineSpacing = lineSpacing
 
-	op.GeoM.Translate(config.WindowWidth/2-width/2, 20)
+	op.GeoM.Translate(config.WindowWidth/2-width/2, y)
 	op.ColorScale.ScaleWithColor(config.ChampagneGold())
 
 	return &Text{

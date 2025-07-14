@@ -48,8 +48,8 @@ func (s *GameScene) loadGameBricks() error {
 			break
 		}
 
-		brick.Position.X = x
-		brick.Position.Y = y
+		brick.Position.X = float64(x)
+		brick.Position.Y = float64(y)
 		x += GAME_BRICK_WIDTH + spacing
 
 		// Gå till nästa rad efter varje tredje bricka

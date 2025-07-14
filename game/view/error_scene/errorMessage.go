@@ -16,7 +16,7 @@ type ErrorMessage struct {
 }
 
 func NewErrorMessage() (*ErrorMessage, error) {
-	text, loadError := view.NewCenterAlignedText(errorMessageText, 10)
+	text, loadError := view.NewCenterAlignedText(errorMessageText, 10.0)
 
 	return &ErrorMessage{
 		text:          text,

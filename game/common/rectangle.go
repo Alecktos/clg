@@ -2,7 +2,7 @@ package common
 
 type Rectangle struct {
 	Position      Position
-	Width, Height int
+	Width, Height float64
 }
 
 func (r *Rectangle) Contains(position Position) bool {

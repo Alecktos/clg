@@ -33,8 +33,8 @@ func (m *mouse) hasJustReleased() bool {
 func (m *mouse) position() *common.Position {
 	x, y := ebiten.CursorPosition()
 	return &common.Position{
-		X: x,
-		Y: y,
+		X: float64(x),
+		Y: float64(y),
 	}
 }
 

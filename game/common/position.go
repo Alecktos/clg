@@ -1,5 +1,5 @@
 package common
 
 type Position struct {
-	X, Y int
+	X, Y float64
 }
