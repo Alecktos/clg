@@ -2,12 +2,13 @@ package game_scene
 
 import (
 	"github.com/Alecktos/clg/game/config"
+	"github.com/Alecktos/clg/game/view/game_scene/challenge"
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
 type GameScene struct {
 	bricks         [9]*gameBrick
-	challengeModal *challengeModal
+	challengeModal challenge.Modal
 }
 
 func NewGameScene() (*GameScene, error) {
@@ -18,7 +19,7 @@ func NewGameScene() (*GameScene, error) {
 
 func (s *GameScene) load() error {
 	var err error
-	s.challengeModal, err = newChallengeModal()
+	s.challengeModal, err = challenge.NewChallengeModal()
 	if err != nil {
 		return err
 	}
@@ -66,16 +67,16 @@ func (s *GameScene) Draw(screen *ebiten.Image) {
 		brick.draw(screen)
 	}
 
-	s.challengeModal.draw(screen)
+	s.challengeModal.Draw(screen)
 }
 
 func (s *GameScene) Update() {
-	s.challengeModal.update()
+	s.challengeModal.Update()
 
 	for _, brick := range s.bricks {
 		brick.update()
 		if brick.buttonModel.IsClicked() {
-			s.challengeModal.isVisible = true
+			s.challengeModal.Open()
 		}
 	}
 }

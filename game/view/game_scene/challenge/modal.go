@@ -1,4 +1,4 @@
-package game_scene
+package challenge
 
 import (
 	"github.com/Alecktos/clg/game/common"
@@ -7,6 +7,12 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
+type Modal interface {
+	Update()
+	Draw(screen *ebiten.Image)
+	Open()
+}
+
 type challengeModal struct {
 	challengeText        *view.Text
 	roundedRectangle     view.RoundedRectangle
@@ -14,7 +20,7 @@ type challengeModal struct {
 	isVisible            bool
 }
 
-func newChallengeModal() (*challengeModal, error) {
+func NewChallengeModal() (Modal, error) {
 	width := float64(config.WindowWidth - 60)
 	height := float64(300)
 	x1 := 30.0
@@ -45,14 +51,18 @@ func newChallengeModal() (*challengeModal, error) {
 	}, nil
 }
 
-func (c *challengeModal) update() {
+func (c *challengeModal) Open() {
+	c.isVisible = true
+}
+
+func (c *challengeModal) Update() {
 	c.closeChallengeButton.update()
 	if c.closeChallengeButton.buttonModel.IsClicked() {
 		c.isVisible = false
 	}
 }
 
-func (c *challengeModal) draw(screen *ebiten.Image) {
+func (c *challengeModal) Draw(screen *ebiten.Image) {
 	if !c.isVisible {
 		return
 	}

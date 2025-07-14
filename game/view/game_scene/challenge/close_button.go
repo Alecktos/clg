@@ -1,4 +1,4 @@
-package game_scene
+package challenge
 
 import (
 	"github.com/Alecktos/clg/game/common"
