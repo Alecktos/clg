@@ -10,13 +10,13 @@ import (
 	"github.com/hajimehoshi/ebiten/v2/vector"
 )
 
-type ChallengeModal struct {
+type challengeModal struct {
 	whiteImage    *ebiten.Image
 	challengeText *view.Text
 	rectangle     *common.Rectangle
 }
 
-func NewChallengeModal() (*ChallengeModal, error) {
+func newChallengeModal() (*challengeModal, error) {
 	whiteImage := ebiten.NewImage(1, 1)
 	whiteImage.Fill(color.White)
 
@@ -30,14 +30,14 @@ func NewChallengeModal() (*ChallengeModal, error) {
 		return nil, err
 	}
 
-	return &ChallengeModal{
+	return &challengeModal{
 		whiteImage:    whiteImage,
 		challengeText: challengeText,
 		rectangle:     &common.Rectangle{Position: common.Position{X: x1, Y: y1}, Width: width, Height: height},
 	}, nil
 }
 
-func (cm *ChallengeModal) Draw(screen *ebiten.Image) {
+func (cm *challengeModal) Draw(screen *ebiten.Image) {
 
 	radius := float32(25)
 	color := config.VelvetPlum()
@@ -48,7 +48,7 @@ func (cm *ChallengeModal) Draw(screen *ebiten.Image) {
 	cm.challengeText.Draw(screen)
 }
 
-func (cm *ChallengeModal) drawRoundedRectManually(screen *ebiten.Image, radius float32, clr color.Color) {
+func (cm *challengeModal) drawRoundedRectManually(screen *ebiten.Image, radius float32, clr color.Color) {
 	x := float32(cm.rectangle.Position.X)
 	y := float32(cm.rectangle.Position.Y)
 	width := float32(cm.rectangle.Width)

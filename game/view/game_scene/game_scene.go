@@ -6,9 +6,9 @@ import (
 )
 
 type GameScene struct {
-	bricks             [9]*GameBrick
+	bricks             [9]*gameBrick
 	showChallengeModal bool
-	challengeModal     *ChallengeModal
+	challengeModal     *challengeModal
 }
 
 func NewGameScene() (*GameScene, error) {
@@ -19,7 +19,7 @@ func NewGameScene() (*GameScene, error) {
 
 func (s *GameScene) load() error {
 	var err error
-	s.challengeModal, err = NewChallengeModal()
+	s.challengeModal, err = newChallengeModal()
 	if err != nil {
 		return err
 	}
@@ -40,7 +40,7 @@ func (s *GameScene) loadGameBricks() error {
 
 	for index, _ := range s.bricks {
 
-		brick, err := NewGameBrick()
+		brick, err := newGameBrick()
 		if err != nil {
 			loadError = err
 			break

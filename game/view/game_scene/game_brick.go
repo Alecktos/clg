@@ -9,7 +9,7 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
-type GameBrick struct {
+type gameBrick struct {
 	common.Rectangle
 	buttonModel view_model.ButtonModel
 	Img         *ebiten.Image // private?
@@ -18,8 +18,8 @@ type GameBrick struct {
 const GAME_BRICK_WIDTH = 75
 const GAME_BRICK_HEIGHT = 75
 
-func NewGameBrick() (*GameBrick, error) {
-	clgImage := &GameBrick{
+func newGameBrick() (*gameBrick, error) {
+	clgImage := &gameBrick{
 		buttonModel: view_model.NewButtonModel(),
 		Rectangle: common.Rectangle{
 			Position: common.Position{X: 0, Y: 0},
@@ -31,11 +31,11 @@ func NewGameBrick() (*GameBrick, error) {
 	return clgImage, err
 }
 
-func (g *GameBrick) Update() {
+func (g *gameBrick) Update() {
 	g.buttonModel.Update(g.Rectangle)
 }
 
-func (g *GameBrick) Draw(screen *ebiten.Image) {
+func (g *gameBrick) Draw(screen *ebiten.Image) {
 	op := &ebiten.DrawImageOptions{}
 	imgSourceSize := g.Img.Bounds().Size()
 	scaleX := float64(g.Width) / float64(imgSourceSize.X)
@@ -50,7 +50,7 @@ func (g *GameBrick) Draw(screen *ebiten.Image) {
 	screen.DrawImage(g.Img, op)
 }
 
-func (g *GameBrick) loadImage() error {
+func (g *gameBrick) loadImage() error {
 	var err error
 	image, err := images.LoadBrickImage()
 	g.Img = image
