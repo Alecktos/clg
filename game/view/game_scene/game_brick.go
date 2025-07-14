@@ -1,6 +1,7 @@
 package game_scene
 
 import (
+	"github.com/Alecktos/clg/game/view_model"
 	"image/color"
 
 	"github.com/Alecktos/clg/assets/images"
@@ -9,8 +10,9 @@ import (
 )
 
 type GameBrick struct {
-	common.Button
-	Img *ebiten.Image
+	common.Rectangle
+	buttonModel view_model.ButtonModel
+	Img         *ebiten.Image // private?
 }
 
 const GAME_BRICK_WIDTH = 75
@@ -18,36 +20,39 @@ const GAME_BRICK_HEIGHT = 75
 
 func NewGameBrick() (*GameBrick, error) {
 	clgImage := &GameBrick{
-		Button: common.Button{
-			Rectangle: common.Rectangle{
-				Position: common.Position{X: 0, Y: 0},
-				Width:    GAME_BRICK_WIDTH,
-				Height:   GAME_BRICK_HEIGHT,
-			},
+		buttonModel: view_model.NewButtonModel(),
+		Rectangle: common.Rectangle{
+			Position: common.Position{X: 0, Y: 0},
+			Width:    GAME_BRICK_WIDTH,
+			Height:   GAME_BRICK_HEIGHT,
 		},
 	}
 	err := clgImage.loadImage()
 	return clgImage, err
 }
 
-func (c *GameBrick) Draw(screen *ebiten.Image) {
-	op := &ebiten.DrawImageOptions{}
-	imgSourceSize := c.Img.Bounds().Size()
-	scaleX := float64(c.Width) / float64(imgSourceSize.X)
-	scaleY := float64(c.Height) / float64(imgSourceSize.Y)
-	op.GeoM.Scale(scaleX, scaleY)
-	op.GeoM.Translate(float64(c.Position.X), float64(c.Position.Y))
+func (g *GameBrick) Update() {
+	g.buttonModel.Update(g.Rectangle)
+}
 
-	if c.IsPressed() {
+func (g *GameBrick) Draw(screen *ebiten.Image) {
+	op := &ebiten.DrawImageOptions{}
+	imgSourceSize := g.Img.Bounds().Size()
+	scaleX := float64(g.Width) / float64(imgSourceSize.X)
+	scaleY := float64(g.Height) / float64(imgSourceSize.Y)
+	op.GeoM.Scale(scaleX, scaleY)
+	op.GeoM.Translate(float64(g.Position.X), float64(g.Position.Y))
+
+	if g.buttonModel.IsPressed() {
 		op.ColorScale.ScaleWithColor(color.RGBA{R: 100, G: 100, B: 100, A: 255})
 	}
 
-	screen.DrawImage(c.Img, op)
+	screen.DrawImage(g.Img, op)
 }
 
-func (c *GameBrick) loadImage() error {
+func (g *GameBrick) loadImage() error {
 	var err error
 	image, err := images.LoadBrickImage()
-	c.Img = image
+	g.Img = image
 	return err
 }

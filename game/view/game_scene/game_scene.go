@@ -1,8 +1,6 @@
 package game_scene
 
 import (
-	"fmt"
-
 	"github.com/Alecktos/clg/game/config"
 	"github.com/hajimehoshi/ebiten/v2"
 )
@@ -77,8 +75,7 @@ func (s *GameScene) Draw(screen *ebiten.Image) {
 func (s *GameScene) Update() {
 	for _, brick := range s.bricks {
 		brick.Update()
-		if brick.IsClicked() {
-			fmt.Println("clicked a brick")
+		if brick.buttonModel.IsClicked() {
 			// Visa en modal med utmaning
 			s.showChallengeModal = true
 		}
