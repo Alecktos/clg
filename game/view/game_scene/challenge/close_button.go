@@ -26,7 +26,7 @@ func newCloseChallengeButton(parentRectangle common.Rectangle) (*closeChallengeB
 		return nil, err
 	}
 
-	text, _ := view.NewCenterAlignedText("Close", rectangle.Position.Y+rectangle.Height/2-config.StandardFontSize/2, config.StandardFontSize)
+	text, err := view.NewCenterAlignedText("Close", rectangle.Position.Y+rectangle.Height/2-config.StandardFontSize/2, config.StandardFontSize)
 	if err != nil {
 		return nil, err
 	}

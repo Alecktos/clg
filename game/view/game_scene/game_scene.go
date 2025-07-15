@@ -38,7 +38,7 @@ func (s *GameScene) loadGameBricks() error {
 	startX := (config.WindowWidth - totalWidth) / 2
 	x, y := startX, 75
 
-	for index, _ := range s.bricks {
+	for index := range s.bricks {
 
 		brick, err := newGameBrick()
 		if err != nil {

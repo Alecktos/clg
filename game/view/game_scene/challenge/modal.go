@@ -5,7 +5,6 @@ import (
 	"github.com/Alecktos/clg/game/config"
 	"github.com/Alecktos/clg/game/view"
 	"github.com/hajimehoshi/ebiten/v2"
-	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 )
 
 type Modal interface {
