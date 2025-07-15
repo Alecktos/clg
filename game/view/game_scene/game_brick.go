@@ -15,16 +15,16 @@ type gameBrick struct {
 	Img         *ebiten.Image // private?
 }
 
-const GAME_BRICK_WIDTH = 75
-const GAME_BRICK_HEIGHT = 75
+const GameBrickWidth = 400
+const GameBrickHeight = 400
 
 func newGameBrick() (*gameBrick, error) {
 	clgImage := &gameBrick{
 		buttonModel: view_model.NewButtonModel(),
 		Rectangle: common.Rectangle{
 			Position: common.Position{X: 0, Y: 0},
-			Width:    GAME_BRICK_WIDTH,
-			Height:   GAME_BRICK_HEIGHT,
+			Width:    GameBrickWidth,
+			Height:   GameBrickHeight,
 		},
 	}
 	err := clgImage.loadImage()

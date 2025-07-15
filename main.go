@@ -10,7 +10,7 @@ import (
 
 func main() {
 	// does nothing on phone
-	ebiten.SetWindowSize(config.WindowWidth, config.WindowHeight)
+	ebiten.SetWindowSize(config.WindowWidth/4, config.WindowHeight/4)
 
 	if config.DevMode {
 		ebiten.SetWindowTitle("Clg Game - Dev Mode")

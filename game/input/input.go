@@ -34,9 +34,9 @@ func Position() *common.Position {
 
 // Använd interface för att få det att enklare. Kräver struct på dem båda
 func init() {
-	if config.CurrentDevice == config.DeviceTypeDesktop {
+	if config.DetectDevicetype() == config.DeviceTypeDesktop {
 		device = &mouse{}
-	} else if config.CurrentDevice == config.DeviceTypeMobile {
+	} else if config.DetectDevicetype() == config.DeviceTypeMobile {
 		device = &touch{}
 	} else {
 		panic("Unknown device type")

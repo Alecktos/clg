@@ -15,13 +15,13 @@ type closeChallengeButton struct {
 }
 
 func newCloseChallengeButton(parentRectangle common.Rectangle) (*closeChallengeButton, error) {
-	width := 150.0
-	height := 50.0
+	width := config.WindowWidth - 500.0
+	height := 200.0
 
-	position := common.Position{X: parentRectangle.HorizontalCenter() - width/2, Y: parentRectangle.BottomY() - height - 10}
+	position := common.Position{X: parentRectangle.HorizontalCenter() - width/2, Y: parentRectangle.BottomY() - height - 75}
 	rectangle := common.Rectangle{Position: position, Width: width, Height: height}
 
-	backgroundRectangle, err := view.NewRoundedRectangle(rectangle, 10, config.PassionRed())
+	backgroundRectangle, err := view.NewRoundedRectangle(rectangle, 100, config.PassionRed())
 	if err != nil {
 		return nil, err
 	}

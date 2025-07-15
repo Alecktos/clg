@@ -21,9 +21,10 @@ type challengeModal struct {
 }
 
 func NewChallengeModal() (Modal, error) {
-	width := float64(config.WindowWidth - 60)
-	height := float64(300)
-	x1 := 30.0
+	hMargin := 80.0
+	width := config.WindowWidth - hMargin*2
+	height := float64(config.WindowHeight - 800)
+	x1 := hMargin
 	y1 := config.WindowHeight/2 - height/2
 
 	backgroundRectangle := common.Rectangle{Position: common.Position{X: x1, Y: y1}, Width: width, Height: height}
@@ -33,7 +34,7 @@ func NewChallengeModal() (Modal, error) {
 		return nil, err
 	}
 
-	roundedRectangle, err := view.NewRoundedRectangle(backgroundRectangle, 25.0, config.VelvetPlum())
+	roundedRectangle, err := view.NewRoundedRectangle(backgroundRectangle, 100, config.VelvetPlum())
 	if err != nil {
 		return nil, err
 	}

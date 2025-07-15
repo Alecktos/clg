@@ -1,6 +1,9 @@
 package config
 
-import "image/color"
+import (
+	"image/color"
+	"runtime"
+)
 
 type DeviceType int64
 
@@ -10,16 +13,32 @@ const (
 )
 
 const (
-	WindowWidth  = 1290 / 4
-	WindowHeight = 2532 / 4
+	WindowWidth  = 1290
+	WindowHeight = 2532
 
-	DevMode                  = true
-	CurrentDevice DeviceType = DeviceTypeDesktop
+	DevMode = true
 )
 
 const (
-	StandardFontSize = 20
+	StandardFontSize = 90
 )
+
+var cachedDeviceType *DeviceType
+
+func DetectDevicetype() DeviceType {
+	if cachedDeviceType != nil {
+		return *cachedDeviceType
+	}
+	os := runtime.GOOS
+	var deviceType DeviceType
+	if os == "ios" {
+		deviceType = DeviceTypeMobile
+	} else {
+		deviceType = DeviceTypeDesktop
+	}
+	cachedDeviceType = &deviceType
+	return deviceType
+}
 
 // -- Primary Colors --
 

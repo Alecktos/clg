@@ -34,7 +34,7 @@ func (s *GameScene) loadGameBricks() error {
 	spacing := 25
 
 	// Beräkna total bredd för kolumner och startposition för centrerad layout
-	totalWidth := columns*GAME_BRICK_WIDTH + (columns-1)*spacing
+	totalWidth := columns*GameBrickWidth + (columns-1)*spacing
 	startX := (config.WindowWidth - totalWidth) / 2
 	x, y := startX, 75
 
@@ -48,12 +48,12 @@ func (s *GameScene) loadGameBricks() error {
 
 		brick.Position.X = float64(x)
 		brick.Position.Y = float64(y)
-		x += GAME_BRICK_WIDTH + spacing
+		x += GameBrickWidth + spacing
 
 		// Gå till nästa rad efter varje tredje bricka
 		if (index+1)%columns == 0 {
 			x = startX
-			y += GAME_BRICK_HEIGHT + spacing
+			y += GameBrickHeight + spacing
 		}
 		s.bricks[index] = brick
 	}
