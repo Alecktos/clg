@@ -20,7 +20,7 @@ func NewErrorScene() *ErrorScene {
 func (e *ErrorScene) Draw(screen *ebiten.Image, error string) {
 	screen.Fill(config.MidnightBlue())
 	e.errorMessage.Draw(screen)
-	if config.DEV_MODE {
+	if config.DevMode {
 		ebitenutil.DebugPrint(screen, error)
 	}
 }

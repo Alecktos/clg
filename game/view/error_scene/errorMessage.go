@@ -17,7 +17,7 @@ type ErrorMessage struct {
 }
 
 func NewErrorMessage() (*ErrorMessage, error) {
-	text, loadError := view.NewCenterAlignedText(errorMessageText, 10.0, config.STANDARD_FONT_SIZE)
+	text, loadError := view.NewCenterAlignedText(errorMessageText, 10.0, config.StandardFontSize)
 
 	return &ErrorMessage{
 		text:          text,

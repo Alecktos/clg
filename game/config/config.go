@@ -13,11 +13,12 @@ const (
 	WindowWidth  = 1290 / 4
 	WindowHeight = 2532 / 4
 
-	DEV_MODE = true
+	DevMode                  = true
+	CurrentDevice DeviceType = DeviceTypeDesktop
 )
 
 const (
-	STANDARD_FONT_SIZE = 20
+	StandardFontSize = 20
 )
 
 // -- Primary Colors --
@@ -65,5 +66,3 @@ func SkinToneBeige() color.Color {
 func ForbiddenBlack() color.Color {
 	return color.RGBA{R: 17, G: 17, B: 17, A: 255} // #111111
 }
-
-const CurrentDevice DeviceType = DeviceTypeDesktop

@@ -5,6 +5,7 @@ import (
 	"github.com/Alecktos/clg/game/config"
 	"github.com/Alecktos/clg/game/view"
 	"github.com/hajimehoshi/ebiten/v2"
+	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 )
 
 type Modal interface {
@@ -28,7 +29,7 @@ func NewChallengeModal() (Modal, error) {
 
 	backgroundRectangle := common.Rectangle{Position: common.Position{X: x1, Y: y1}, Width: width, Height: height}
 
-	challengeText, err := view.NewCenterAlignedText("Here is challenge for you", y1+20, config.STANDARD_FONT_SIZE)
+	challengeText, err := view.NewCenterAlignedText("Here is challenge for you", y1+20, config.StandardFontSize)
 	if err != nil {
 		return nil, err
 	}
