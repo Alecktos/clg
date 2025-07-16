@@ -1,6 +1,7 @@
 package game_scene
 
 import (
+	"github.com/Alecktos/clg/assets/clg_json"
 	"github.com/Alecktos/clg/game/config"
 	"github.com/Alecktos/clg/game/view/game_scene/challenge"
 	"github.com/hajimehoshi/ebiten/v2"
@@ -9,6 +10,7 @@ import (
 type GameScene struct {
 	bricks         [12]*gameBrick
 	challengeModal challenge.Modal
+	challenges     []clg_json.Challenge
 }
 
 func NewGameScene() (*GameScene, error) {
@@ -23,6 +25,13 @@ func (s *GameScene) load() error {
 	if err != nil {
 		return err
 	}
+
+	challenges, err := clg_json.LoadChallenges()
+	if err != nil {
+		return err
+	}
+	s.challenges = challenges
+
 	loadError := s.loadGameBricks()
 	return loadError
 }
