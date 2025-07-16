@@ -12,7 +12,7 @@ import (
 type gameBrick struct {
 	common.Rectangle
 	buttonModel view_model.ButtonModel
-	Img         *ebiten.Image // private?
+	img         *ebiten.Image
 }
 
 const GameBrickWidth = 400
@@ -37,7 +37,7 @@ func (g *gameBrick) update() {
 
 func (g *gameBrick) draw(screen *ebiten.Image) {
 	op := &ebiten.DrawImageOptions{}
-	imgSourceSize := g.Img.Bounds().Size()
+	imgSourceSize := g.img.Bounds().Size()
 	scaleX := float64(g.Width) / float64(imgSourceSize.X)
 	scaleY := float64(g.Height) / float64(imgSourceSize.Y)
 	op.GeoM.Scale(scaleX, scaleY)
@@ -47,12 +47,12 @@ func (g *gameBrick) draw(screen *ebiten.Image) {
 		op.ColorScale.ScaleWithColor(color.RGBA{R: 100, G: 100, B: 100, A: 255})
 	}
 
-	screen.DrawImage(g.Img, op)
+	screen.DrawImage(g.img, op)
 }
 
 func (g *gameBrick) loadImage() error {
 	var err error
 	image, err := images.LoadBrickImage()
-	g.Img = image
+	g.img = image
 	return err
 }
