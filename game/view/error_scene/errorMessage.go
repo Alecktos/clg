@@ -12,12 +12,13 @@ const errorMessageText = `Failed to load game.
 Please try and restart the app.`
 
 type ErrorMessage struct {
-	text          *view.Text
+	text          view.Text
 	textLoadError error
 }
 
 func NewErrorMessage() (*ErrorMessage, error) {
-	text, loadError := view.NewCenterAlignedText(errorMessageText, 10.0, config.StandardFontSize)
+	text, loadError := view.NewCenterAlignedText()
+	text.SetText(errorMessageText, 10.0, config.StandardFontSize)
 
 	return &ErrorMessage{
 		text:          text,

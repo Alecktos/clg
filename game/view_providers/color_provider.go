@@ -5,6 +5,13 @@ import (
 	"image/color"
 )
 
+type ColorProviderInterface interface {
+	ResetToInitialColor()
+	DarkenColor(factor float32)
+	GetColor() config.ClgColor
+	SetColor(newColor config.ClgColor)
+}
+
 type ColorProvider struct {
 	initialColor   config.ClgColor
 	color          config.ClgColor

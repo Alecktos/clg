@@ -1,6 +1,7 @@
 package challenge
 
 import (
+	"github.com/Alecktos/clg/assets/clg_json"
 	"github.com/Alecktos/clg/game/common"
 	"github.com/Alecktos/clg/game/config"
 	"github.com/Alecktos/clg/game/view"
@@ -10,12 +11,12 @@ import (
 type Modal interface {
 	Update()
 	Draw(screen *ebiten.Image)
-	Open()
+	Open(challenge *clg_json.Challenge)
 	IsVisible() bool
 }
 
 type challengeModal struct {
-	challengeText        *view.Text
+	challengeText        view.Text
 	roundedRectangle     view.RoundedRectangle
 	closeChallengeButton *closeChallengeButton
 	isVisible            bool
@@ -30,7 +31,7 @@ func NewChallengeModal() (Modal, error) {
 
 	backgroundRectangle := common.Rectangle{Position: common.Position{X: x1, Y: y1}, Width: width, Height: height}
 
-	challengeText, err := view.NewCenterAlignedText("Here is challenge for you", y1+20, config.StandardFontSize)
+	challengeText, err := view.NewCenterAlignedText()
 	if err != nil {
 		return nil, err
 	}
@@ -53,7 +54,8 @@ func NewChallengeModal() (Modal, error) {
 	}, nil
 }
 
-func (c *challengeModal) Open() {
+func (c *challengeModal) Open(challenge *clg_json.Challenge) {
+	c.challengeText.SetText(challenge.Header, config.WindowHeight/2-c.roundedRectangle.GetRectangle().Height/2+20, config.StandardFontSize)
 	c.isVisible = true
 }
 

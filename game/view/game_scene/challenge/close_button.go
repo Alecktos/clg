@@ -11,7 +11,7 @@ import (
 type closeChallengeButton struct {
 	backgroundRectangle view.RoundedRectangle
 	buttonModel         view_model.ButtonModel
-	text                *view.Text
+	text                view.Text
 }
 
 func newCloseChallengeButton(parentRectangle common.Rectangle) (*closeChallengeButton, error) {
@@ -26,10 +26,11 @@ func newCloseChallengeButton(parentRectangle common.Rectangle) (*closeChallengeB
 		return nil, err
 	}
 
-	text, err := view.NewCenterAlignedText("Close", rectangle.Position.Y+rectangle.Height/2-config.StandardFontSize/2, config.StandardFontSize)
+	text, err := view.NewCenterAlignedText()
 	if err != nil {
 		return nil, err
 	}
+	text.SetText("Close", rectangle.Position.Y+rectangle.Height/2-config.StandardFontSize/2, config.StandardFontSize)
 
 	return &closeChallengeButton{
 		backgroundRectangle: backgroundRectangle,

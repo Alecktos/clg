@@ -9,46 +9,52 @@ import (
 	"github.com/hajimehoshi/ebiten/v2/text/v2"
 )
 
-type Text struct {
-	text string
+type Text interface {
+	SetText(alignedText string, y float64, fontSize float64)
+	Draw(screen *ebiten.Image)
+	view_providers.ColorProviderInterface
+}
+
+type clgText struct {
+	text *string
 	op   *text.DrawOptions
 	f    *text.GoTextFace
 	view_providers.ColorProvider
 }
 
-func NewCenterAlignedText(alignedText string, y float64, fontSize float64) (*Text, error) {
+func NewCenterAlignedText() (Text, error) {
 	if fonts.GameFont == nil {
 		return nil, errors.New("font not loaded correctly")
 	}
+	return &clgText{}, nil
+}
 
-	f := &text.GoTextFace{
+func (t *clgText) SetText(alignedText string, y float64, fontSize float64) {
+	t.f = &text.GoTextFace{
 		Source: fonts.GameFont,
 		Size:   fontSize,
 	}
 
 	lineSpacing := fontSize + 5
-	width, _ := text.Measure(alignedText, f, lineSpacing)
+	width, _ := text.Measure(alignedText, t.f, lineSpacing)
 
-	op := text.DrawOptions{}
-	op.LineSpacing = lineSpacing
+	t.op = &text.DrawOptions{}
+	t.op.LineSpacing = lineSpacing
 
-	op.GeoM.Translate(config.WindowWidth/2-width/2, y)
+	t.op.GeoM.Translate(config.WindowWidth/2-width/2, y)
 
 	textColor := config.ChampagneGold()
-	op.ColorScale.ScaleWithColor(textColor)
-	colorModel := view_providers.NewColorProvider(textColor, func(clgColor config.ClgColor) {
-		op.ColorScale.Reset()
-		op.ColorScale.ScaleWithColor(clgColor)
+	t.op.ColorScale.ScaleWithColor(textColor)
+	t.ColorProvider = view_providers.NewColorProvider(textColor, func(clgColor config.ClgColor) {
+		t.op.ColorScale.Reset()
+		t.op.ColorScale.ScaleWithColor(clgColor)
 	})
-
-	return &Text{
-		text:          alignedText,
-		op:            &op,
-		f:             f,
-		ColorProvider: colorModel,
-	}, nil
+	t.text = &alignedText
 }
 
-func (t *Text) Draw(screen *ebiten.Image) {
-	text.Draw(screen, t.text, t.f, t.op)
+func (t *clgText) Draw(screen *ebiten.Image) {
+	if t.text == nil || t.f == nil || t.op == nil {
+		return
+	}
+	text.Draw(screen, *t.text, t.f, t.op)
 }

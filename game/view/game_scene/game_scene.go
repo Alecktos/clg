@@ -8,7 +8,7 @@ import (
 )
 
 type GameScene struct {
-	bricks         [12]*gameBrick
+	bricks         [6]*gameBrick
 	challengeModal challenge.Modal
 	challenges     []clg_json.Challenge
 }
@@ -49,7 +49,7 @@ func (s *GameScene) loadGameBricks() error {
 
 	for index := range s.bricks {
 
-		brick, err := newGameBrick()
+		brick, err := newGameBrick(s.challenges[index])
 		if err != nil {
 			loadError = err
 			break
@@ -84,7 +84,7 @@ func (s *GameScene) Update() {
 	for _, brick := range s.bricks {
 		brick.update()
 		if !s.challengeModal.IsVisible() && brick.buttonModel.IsClicked() {
-			s.challengeModal.Open()
+			s.challengeModal.Open(&brick.Challenge)
 		}
 	}
 }

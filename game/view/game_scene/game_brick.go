@@ -1,6 +1,7 @@
 package game_scene
 
 import (
+	"github.com/Alecktos/clg/assets/clg_json"
 	"github.com/Alecktos/clg/game/view_model"
 	"image/color"
 
@@ -13,22 +14,24 @@ type gameBrick struct {
 	common.Rectangle
 	buttonModel view_model.ButtonModel
 	img         *ebiten.Image
+	Challenge   clg_json.Challenge
 }
 
 const GameBrickWidth = 400
 const GameBrickHeight = 400
 
-func newGameBrick() (*gameBrick, error) {
-	clgImage := &gameBrick{
+func newGameBrick(challenge clg_json.Challenge) (*gameBrick, error) {
+	brick := &gameBrick{
 		buttonModel: view_model.NewButtonModel(),
 		Rectangle: common.Rectangle{
 			Position: common.Position{X: 0, Y: 0},
 			Width:    GameBrickWidth,
 			Height:   GameBrickHeight,
 		},
+		Challenge: challenge,
 	}
-	err := clgImage.loadImage()
-	return clgImage, err
+	err := brick.loadImage()
+	return brick, err
 }
 
 func (g *gameBrick) update() {
