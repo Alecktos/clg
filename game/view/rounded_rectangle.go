@@ -2,6 +2,8 @@ package view
 
 import (
 	"github.com/Alecktos/clg/game/common"
+	"github.com/Alecktos/clg/game/config"
+	"github.com/Alecktos/clg/game/view_providers"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/vector"
 	"image/color"
@@ -10,24 +12,28 @@ import (
 type RoundedRectangle interface {
 	Draw(image *ebiten.Image)
 	GetRectangle() *common.Rectangle
+	DarkenColor(factor float32)
+	ResetToInitialColor()
 }
 
 type roundedRectangle struct {
 	common.Rectangle
 	radius     float32
-	color      color.Color
 	whiteImage *ebiten.Image
+	view_providers.ColorProvider
 }
 
-func NewRoundedRectangle(rectangle common.Rectangle, radius float32, backgroundColor color.Color) (RoundedRectangle, error) {
+func NewRoundedRectangle(rectangle common.Rectangle, radius float32, backgroundColor config.ClgColor) (RoundedRectangle, error) {
 	whiteImage := ebiten.NewImage(1, 1)
 	whiteImage.Fill(color.White)
 
+	colorProvider := view_providers.NewColorProvider(backgroundColor, nil)
+
 	return &roundedRectangle{
-		Rectangle:  rectangle,
-		radius:     radius,
-		color:      backgroundColor,
-		whiteImage: whiteImage,
+		Rectangle:     rectangle,
+		radius:        radius,
+		whiteImage:    whiteImage,
+		ColorProvider: colorProvider,
 	}, nil
 }
 
@@ -61,7 +67,7 @@ func (r *roundedRectangle) drawRoundedRectManually(screen *ebiten.Image) {
 	vertices, indices := p.AppendVerticesAndIndicesForFilling(nil, nil)
 
 	//Set rectangle color
-	cr, cg, cb, ca := r.color.RGBA()
+	cr, cg, cb, ca := r.GetColor().RGBA()
 	colorR := float32(cr) / 0xffff
 	colorG := float32(cg) / 0xffff
 	colorB := float32(cb) / 0xffff

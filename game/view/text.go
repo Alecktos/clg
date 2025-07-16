@@ -4,6 +4,7 @@ import (
 	"errors"
 	"github.com/Alecktos/clg/assets/fonts"
 	"github.com/Alecktos/clg/game/config"
+	"github.com/Alecktos/clg/game/view_providers"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/text/v2"
 )
@@ -12,6 +13,7 @@ type Text struct {
 	text string
 	op   *text.DrawOptions
 	f    *text.GoTextFace
+	view_providers.ColorProvider
 }
 
 func NewCenterAlignedText(alignedText string, y float64, fontSize float64) (*Text, error) {
@@ -31,12 +33,19 @@ func NewCenterAlignedText(alignedText string, y float64, fontSize float64) (*Tex
 	op.LineSpacing = lineSpacing
 
 	op.GeoM.Translate(config.WindowWidth/2-width/2, y)
-	op.ColorScale.ScaleWithColor(config.ChampagneGold())
+
+	textColor := config.ChampagneGold()
+	op.ColorScale.ScaleWithColor(textColor)
+	colorModel := view_providers.NewColorProvider(textColor, func(clgColor config.ClgColor) {
+		op.ColorScale.Reset()
+		op.ColorScale.ScaleWithColor(clgColor)
+	})
 
 	return &Text{
-		text: alignedText,
-		op:   &op,
-		f:    f,
+		text:          alignedText,
+		op:            &op,
+		f:             f,
+		ColorProvider: colorModel,
 	}, nil
 }
 

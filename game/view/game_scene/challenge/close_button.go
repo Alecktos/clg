@@ -40,6 +40,14 @@ func newCloseChallengeButton(parentRectangle common.Rectangle) (*closeChallengeB
 
 func (c *closeChallengeButton) update() {
 	c.buttonModel.Update(*c.backgroundRectangle.GetRectangle())
+	if c.buttonModel.FirstPressedTick() {
+		var darkenFactor float32 = 0.8
+		c.text.DarkenColor(darkenFactor)
+		c.backgroundRectangle.DarkenColor(darkenFactor)
+	} else if !c.buttonModel.IsPressed() {
+		c.text.ResetToInitialColor()
+		c.backgroundRectangle.ResetToInitialColor()
+	}
 }
 
 func (c *closeChallengeButton) draw(screen *ebiten.Image) {

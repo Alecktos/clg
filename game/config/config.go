@@ -40,48 +40,52 @@ func DetectDevicetype() DeviceType {
 	return deviceType
 }
 
+type ClgColor struct {
+	color.Color
+}
+
 // -- Primary Colors --
 
 // Main buttons, highlights, challenges
-func PassionRed() color.Color {
-	return color.RGBA{R: 215, G: 38, B: 56, A: 255} // #D72638
+func PassionRed() ClgColor {
+	return ClgColor{color.RGBA{R: 215, G: 38, B: 56, A: 255}} // #D72638
 }
 
 // Backgrounds, overlays, cards
-func VelvetPlum() color.Color {
-	return color.RGBA{R: 94, G: 42, B: 93, A: 255} // #5E2A5D
+func VelvetPlum() ClgColor {
+	return ClgColor{color.RGBA{R: 94, G: 42, B: 93, A: 255}} // #5E2A5D
 }
 
 // -- Secondary Colors --
 
 // Hover effects, soft UI accents
-func BlushPink() color.Color {
-	return color.RGBA{R: 247, G: 141, B: 167, A: 255} // #F78DA7
+func BlushPink() ClgColor {
+	return ClgColor{color.RGBA{R: 247, G: 141, B: 167, A: 255}} // #F78DA7
 }
 
 // Deep backgrounds, contrast zones
-func MidnightBlue() color.Color {
-	return color.RGBA{R: 28, G: 28, B: 58, A: 255} // #1C1C3A
+func MidnightBlue() ClgColor {
+	return ClgColor{color.RGBA{R: 28, G: 28, B: 58, A: 255}} // #1C1C3A
 }
 
 // Decorative lines, elegant text
-func ChampagneGold() color.Color {
-	return color.RGBA{R: 244, G: 226, B: 216, A: 255} // #F4E2D8
+func ChampagneGold() ClgColor {
+	return ClgColor{color.RGBA{R: 244, G: 226, B: 216, A: 255}} // #F4E2D8
 }
 
 // -- Accent / Feedback Colors --
 
 // Progress bars, timer, glow effects
-func TeasePurple() color.Color {
-	return color.RGBA{R: 166, G: 120, B: 180, A: 255} // #A678B4
+func TeasePurple() ClgColor {
+	return ClgColor{color.RGBA{R: 166, G: 120, B: 180, A: 255}} // #A678B4
 }
 
 // Background gradients, intimacy
-func SkinToneBeige() color.Color {
-	return color.RGBA{R: 255, G: 214, B: 192, A: 255} // #FFD6C0
+func SkinToneBeige() ClgColor {
+	return ClgColor{color.RGBA{R: 255, G: 214, B: 192, A: 255}} // #FFD6C0
 }
 
 // Text, icons, subtle shadows
-func ForbiddenBlack() color.Color {
-	return color.RGBA{R: 17, G: 17, B: 17, A: 255} // #111111
+func ForbiddenBlack() ClgColor {
+	return ClgColor{color.RGBA{R: 17, G: 17, B: 17, A: 255}} // #111111
 }
