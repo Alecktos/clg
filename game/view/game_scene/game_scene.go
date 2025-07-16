@@ -7,7 +7,7 @@ import (
 )
 
 type GameScene struct {
-	bricks         [9]*gameBrick
+	bricks         [12]*gameBrick
 	challengeModal challenge.Modal
 }
 
@@ -74,7 +74,7 @@ func (s *GameScene) Update() {
 
 	for _, brick := range s.bricks {
 		brick.update()
-		if brick.buttonModel.IsClicked() {
+		if !s.challengeModal.IsVisible() && brick.buttonModel.IsClicked() {
 			s.challengeModal.Open()
 		}
 	}

@@ -11,6 +11,7 @@ type Modal interface {
 	Update()
 	Draw(screen *ebiten.Image)
 	Open()
+	IsVisible() bool
 }
 
 type challengeModal struct {
@@ -54,6 +55,10 @@ func NewChallengeModal() (Modal, error) {
 
 func (c *challengeModal) Open() {
 	c.isVisible = true
+}
+
+func (c *challengeModal) IsVisible() bool {
+	return c.isVisible
 }
 
 func (c *challengeModal) Update() {
