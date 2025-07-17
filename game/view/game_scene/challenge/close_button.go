@@ -6,12 +6,13 @@ import (
 	"github.com/Alecktos/clg/game/view"
 	"github.com/Alecktos/clg/game/view_model"
 	"github.com/hajimehoshi/ebiten/v2"
+	text2 "github.com/hajimehoshi/ebiten/v2/text/v2"
 )
 
 type closeChallengeButton struct {
 	backgroundRectangle view.RoundedRectangle
 	buttonModel         view_model.ButtonModel
-	text                view.Text
+	buttonLabel         view.Text
 }
 
 func newCloseChallengeButton(parentRectangle common.Rectangle) (*closeChallengeButton, error) {
@@ -26,15 +27,18 @@ func newCloseChallengeButton(parentRectangle common.Rectangle) (*closeChallengeB
 		return nil, err
 	}
 
-	text, err := view.NewCenterAlignedText()
+	buttonLabel, err := view.NewCenterAlignedText()
 	if err != nil {
 		return nil, err
 	}
-	text.SetText("Close", rectangle.Position.Y+rectangle.Height/2-config.StandardFontSize/2, config.StandardFontSize)
+
+	textLayout := view.NewTextLayout(common.Position{X: config.WindowWidth / 2, Y: rectangle.Position.Y + rectangle.Height/2})
+	textLayout.VerticalAlign = text2.AlignCenter
+	buttonLabel.SetText("Close", textLayout)
 
 	return &closeChallengeButton{
 		backgroundRectangle: backgroundRectangle,
-		text:                text,
+		buttonLabel:         buttonLabel,
 		buttonModel:         view_model.NewButtonModel(),
 	}, nil
 }
@@ -43,15 +47,15 @@ func (c *closeChallengeButton) update() {
 	c.buttonModel.Update(*c.backgroundRectangle.GetRectangle())
 	if c.buttonModel.FirstPressedTick() {
 		var darkenFactor float32 = 0.8
-		c.text.DarkenColor(darkenFactor)
+		c.buttonLabel.DarkenColor(darkenFactor)
 		c.backgroundRectangle.DarkenColor(darkenFactor)
 	} else if !c.buttonModel.IsPressed() {
-		c.text.ResetToInitialColor()
+		c.buttonLabel.ResetToInitialColor()
 		c.backgroundRectangle.ResetToInitialColor()
 	}
 }
 
 func (c *closeChallengeButton) draw(screen *ebiten.Image) {
 	c.backgroundRectangle.Draw(screen)
-	c.text.Draw(screen)
+	c.buttonLabel.Draw(screen)
 }

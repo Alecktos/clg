@@ -16,7 +16,8 @@ type Modal interface {
 }
 
 type challengeModal struct {
-	challengeText        view.Text
+	header               view.Text
+	description          view.Text
 	roundedRectangle     view.RoundedRectangle
 	closeChallengeButton *closeChallengeButton
 	isVisible            bool
@@ -31,7 +32,12 @@ func NewChallengeModal() (Modal, error) {
 
 	backgroundRectangle := common.Rectangle{Position: common.Position{X: x1, Y: y1}, Width: width, Height: height}
 
-	challengeText, err := view.NewCenterAlignedText()
+	header, err := view.NewCenterAlignedText()
+	if err != nil {
+		return nil, err
+	}
+
+	description, err := view.NewCenterAlignedText()
 	if err != nil {
 		return nil, err
 	}
@@ -47,7 +53,8 @@ func NewChallengeModal() (Modal, error) {
 	}
 
 	return &challengeModal{
-		challengeText:        challengeText,
+		header:               header,
+		description:          description,
 		roundedRectangle:     roundedRectangle,
 		closeChallengeButton: closeButton,
 		isVisible:            false,
@@ -55,7 +62,18 @@ func NewChallengeModal() (Modal, error) {
 }
 
 func (c *challengeModal) Open(challenge *clg_json.Challenge) {
-	c.challengeText.SetText(challenge.Header, config.WindowHeight/2-c.roundedRectangle.GetRectangle().Height/2+20, config.StandardFontSize)
+	y := c.roundedRectangle.GetRectangle().Position.Y + 85
+
+	textLayout := view.NewTextLayout(common.Position{X: config.WindowWidth / 2, Y: y})
+	textLayout.FontSize = config.HeaderFontSize
+	textLayout.Color = config.BlushPink()
+	textLayout.MaxWidth = int(c.roundedRectangle.GetRectangle().Width)
+
+	c.header.SetText(challenge.Header, textLayout)
+
+	textLayout.Position.Y += 200
+	textLayout.Color = config.ChampagneGold()
+	c.description.SetText(challenge.Description, textLayout)
 	c.isVisible = true
 }
 
@@ -75,6 +93,7 @@ func (c *challengeModal) Draw(screen *ebiten.Image) {
 		return
 	}
 	c.roundedRectangle.Draw(screen)
-	c.challengeText.Draw(screen)
+	c.header.Draw(screen)
+	c.description.Draw(screen)
 	c.closeChallengeButton.draw(screen)
 }

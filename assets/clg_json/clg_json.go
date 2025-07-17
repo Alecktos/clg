@@ -3,8 +3,8 @@ package clg_json
 import "encoding/json"
 
 type Challenge struct {
-	Header string `json:"header"`
-	Text   string `json:"text"`
+	Header      string `json:"header"`
+	Description string `json:"description"`
 }
 
 func LoadChallenges() ([]Challenge, error) {
