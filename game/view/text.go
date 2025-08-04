@@ -34,7 +34,7 @@ func NewTextLayout(position common.Position) TextLayout {
 type Text interface {
 	SetText(text string, layout TextLayout)
 	Draw(screen *ebiten.Image)
-	view_providers.ColorProviderInterface
+	view_providers.ColorProvider
 }
 
 type clgText struct {

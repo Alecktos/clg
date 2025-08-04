@@ -5,14 +5,14 @@ import (
 	"image/color"
 )
 
-type ColorProviderInterface interface {
+type ColorProvider interface {
 	ResetToInitialColor()
 	DarkenColor(factor float32)
 	GetColor() config.ClgColor
 	SetColor(newColor config.ClgColor)
 }
 
-type ColorProvider struct {
+type colorProvider struct {
 	initialColor   config.ClgColor
 	color          config.ClgColor
 	onColorChanged func(config.ClgColor)
@@ -22,18 +22,18 @@ func NewColorProvider(c config.ClgColor, onColorChanged func(config.ClgColor)) C
 	if onColorChanged == nil {
 		onColorChanged = func(clgColor config.ClgColor) {}
 	}
-	return ColorProvider{
+	return &colorProvider{
 		initialColor:   c,
 		color:          c,
 		onColorChanged: onColorChanged,
 	}
 }
 
-func (c *ColorProvider) ResetToInitialColor() {
+func (c *colorProvider) ResetToInitialColor() {
 	c.SetColor(c.initialColor)
 }
 
-func (c *ColorProvider) DarkenColor(factor float32) {
+func (c *colorProvider) DarkenColor(factor float32) {
 	r, g, b, a := c.color.RGBA()
 	darkenColor := color.RGBA{
 		R: uint8(float32(r>>8) * factor),
@@ -44,11 +44,11 @@ func (c *ColorProvider) DarkenColor(factor float32) {
 	c.SetColor(config.ClgColor{Color: darkenColor})
 }
 
-func (c *ColorProvider) GetColor() config.ClgColor {
+func (c *colorProvider) GetColor() config.ClgColor {
 	return c.color
 }
 
-func (c *ColorProvider) SetColor(newColor config.ClgColor) {
+func (c *colorProvider) SetColor(newColor config.ClgColor) {
 	if newColor != c.color {
 		c.color = newColor
 		c.onColorChanged(newColor)

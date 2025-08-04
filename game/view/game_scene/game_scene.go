@@ -85,7 +85,7 @@ func (s *GameScene) Update() {
 		brick.update()
 		if !s.challengeModal.IsVisible() && brick.buttonModel.IsClicked() {
 			s.challengeModal.Open(&brick.Challenge, func() {
-				brick.buttonModel.SetVisibility(false)
+				brick.SetVisibility(false)
 			})
 		}
 	}
