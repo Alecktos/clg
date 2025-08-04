@@ -43,7 +43,7 @@ func (s *GameScene) loadGameBricks() error {
 	spacing := 25
 
 	// Beräkna total bredd för kolumner och startposition för centrerad layout
-	totalWidth := columns*GameBrickWidth + (columns-1)*spacing
+	totalWidth := columns*gameBrickWidth + (columns-1)*spacing
 	startX := (config.WindowWidth - totalWidth) / 2
 	x, y := startX, 75
 
@@ -57,12 +57,12 @@ func (s *GameScene) loadGameBricks() error {
 
 		brick.Position.X = float64(x)
 		brick.Position.Y = float64(y)
-		x += GameBrickWidth + spacing
+		x += gameBrickWidth + spacing
 
 		// Gå till nästa rad efter varje tredje bricka
 		if (index+1)%columns == 0 {
 			x = startX
-			y += GameBrickHeight + spacing
+			y += gameBrickHeight + spacing
 		}
 		s.bricks[index] = brick
 	}
@@ -84,7 +84,9 @@ func (s *GameScene) Update() {
 	for _, brick := range s.bricks {
 		brick.update()
 		if !s.challengeModal.IsVisible() && brick.buttonModel.IsClicked() {
-			s.challengeModal.Open(&brick.Challenge)
+			s.challengeModal.Open(&brick.Challenge, func() {
+				brick.buttonModel.SetVisibility(false)
+			})
 		}
 	}
 }

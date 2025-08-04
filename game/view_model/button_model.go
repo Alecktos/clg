@@ -11,6 +11,8 @@ type ButtonModel interface {
 	IsPressed() bool
 	IsClicked() bool
 	FirstPressedTick() bool
+	SetVisibility(visible bool)
+	IsVisible() bool
 }
 
 type buttonModel struct {
@@ -18,10 +20,13 @@ type buttonModel struct {
 	pressedPosition  common.Position
 	hasPressed       bool
 	firstPressedTick bool
+	visible          bool
 }
 
 func NewButtonModel() ButtonModel {
-	return &buttonModel{}
+	return &buttonModel{
+		visible: true,
+	}
 }
 
 func (b *buttonModel) Update(rectangle common.Rectangle) {
@@ -45,6 +50,13 @@ func (b *buttonModel) Update(rectangle common.Rectangle) {
 	}
 
 	b.isPressed = isPressed
+}
+func (b *buttonModel) SetVisibility(visible bool) {
+	b.visible = visible
+}
+
+func (b *buttonModel) IsVisible() bool {
+	return b.visible
 }
 
 func (b *buttonModel) IsPressed() bool {

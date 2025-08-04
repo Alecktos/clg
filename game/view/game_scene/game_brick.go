@@ -17,16 +17,16 @@ type gameBrick struct {
 	Challenge   clg_json.Challenge
 }
 
-const GameBrickWidth = 400
-const GameBrickHeight = 400
+const gameBrickWidth = 400
+const gameBrickHeight = 400
 
 func newGameBrick(challenge clg_json.Challenge) (*gameBrick, error) {
 	brick := &gameBrick{
 		buttonModel: view_model.NewButtonModel(),
 		Rectangle: common.Rectangle{
 			Position: common.Position{X: 0, Y: 0},
-			Width:    GameBrickWidth,
-			Height:   GameBrickHeight,
+			Width:    gameBrickWidth,
+			Height:   gameBrickHeight,
 		},
 		Challenge: challenge,
 	}
@@ -39,6 +39,9 @@ func (g *gameBrick) update() {
 }
 
 func (g *gameBrick) draw(screen *ebiten.Image) {
+	if !g.buttonModel.IsVisible() {
+		return
+	}
 	op := &ebiten.DrawImageOptions{}
 	imgSourceSize := g.img.Bounds().Size()
 	scaleX := float64(g.Width) / float64(imgSourceSize.X)

@@ -11,7 +11,7 @@ import (
 type Modal interface {
 	Update()
 	Draw(screen *ebiten.Image)
-	Open(challenge *clg_json.Challenge)
+	Open(challenge *clg_json.Challenge, onClosed func())
 	IsVisible() bool
 }
 
@@ -21,6 +21,7 @@ type challengeModal struct {
 	roundedRectangle     view.RoundedRectangle
 	closeChallengeButton *closeChallengeButton
 	isVisible            bool
+	onClosed             func()
 }
 
 func NewChallengeModal() (Modal, error) {
@@ -58,10 +59,11 @@ func NewChallengeModal() (Modal, error) {
 		roundedRectangle:     roundedRectangle,
 		closeChallengeButton: closeButton,
 		isVisible:            false,
+		onClosed:             func() {},
 	}, nil
 }
 
-func (c *challengeModal) Open(challenge *clg_json.Challenge) {
+func (c *challengeModal) Open(challenge *clg_json.Challenge, onClosed func()) {
 	y := c.roundedRectangle.GetRectangle().Position.Y + 85
 
 	textLayout := view.NewTextLayout(common.Position{X: config.WindowWidth / 2, Y: y})
@@ -75,6 +77,7 @@ func (c *challengeModal) Open(challenge *clg_json.Challenge) {
 	textLayout.Color = config.ChampagneGold()
 	c.description.SetText(challenge.Description, textLayout)
 	c.isVisible = true
+	c.onClosed = onClosed
 }
 
 func (c *challengeModal) IsVisible() bool {
@@ -85,6 +88,7 @@ func (c *challengeModal) Update() {
 	c.closeChallengeButton.update()
 	if c.closeChallengeButton.buttonModel.IsClicked() {
 		c.isVisible = false
+		c.onClosed()
 	}
 }
 
