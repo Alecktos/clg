@@ -1,4 +1,4 @@
-package challenge
+package modal
 
 import (
 	"github.com/Alecktos/clg/game/common"

@@ -1,4 +1,4 @@
-package challenge
+package modal
 
 import (
 	"github.com/Alecktos/clg/assets/clg_json"
@@ -15,7 +15,7 @@ type Modal interface {
 	IsVisible() bool
 }
 
-type challengeModal struct {
+type modal struct {
 	header               view.Text
 	description          view.Text
 	roundedRectangle     view.RoundedRectangle
@@ -24,7 +24,7 @@ type challengeModal struct {
 	onClosed             func()
 }
 
-func NewChallengeModal() (Modal, error) {
+func NewModal() (Modal, error) {
 	hMargin := 80.0
 	width := config.WindowWidth - hMargin*2
 	height := float64(config.WindowHeight - 800)
@@ -53,7 +53,7 @@ func NewChallengeModal() (Modal, error) {
 		return nil, err
 	}
 
-	return &challengeModal{
+	return &modal{
 		header:               header,
 		description:          description,
 		roundedRectangle:     roundedRectangle,
@@ -63,7 +63,7 @@ func NewChallengeModal() (Modal, error) {
 	}, nil
 }
 
-func (c *challengeModal) Open(challenge *clg_json.Challenge, onClosed func()) {
+func (c *modal) Open(challenge *clg_json.Challenge, onClosed func()) {
 	y := c.roundedRectangle.GetRectangle().Position.Y + 85
 
 	textLayout := view.NewTextLayout(common.Position{X: config.WindowWidth / 2, Y: y})
@@ -80,11 +80,11 @@ func (c *challengeModal) Open(challenge *clg_json.Challenge, onClosed func()) {
 	c.onClosed = onClosed
 }
 
-func (c *challengeModal) IsVisible() bool {
+func (c *modal) IsVisible() bool {
 	return c.isVisible
 }
 
-func (c *challengeModal) Update() {
+func (c *modal) Update() {
 	c.closeChallengeButton.update()
 	if c.closeChallengeButton.buttonModel.IsClicked() {
 		c.isVisible = false
@@ -92,7 +92,7 @@ func (c *challengeModal) Update() {
 	}
 }
 
-func (c *challengeModal) Draw(screen *ebiten.Image) {
+func (c *modal) Draw(screen *ebiten.Image) {
 	if !c.isVisible {
 		return
 	}
