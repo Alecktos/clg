@@ -11,10 +11,13 @@ type GameScene struct {
 	bricks         [6]*gameBrick
 	challengeModal modal.Modal
 	challenges     []clg_json.Challenge
+	onDone         func()
 }
 
-func NewGameScene() (*GameScene, error) {
-	gameScene := &GameScene{}
+func NewGameScene(onDone func()) (*GameScene, error) {
+	gameScene := &GameScene{
+		onDone: onDone,
+	}
 	loadError := gameScene.load()
 	return gameScene, loadError
 }
@@ -86,7 +89,19 @@ func (s *GameScene) Update() {
 		if !s.challengeModal.IsVisible() && brick.buttonModel.IsClicked() {
 			s.challengeModal.Open(&brick.Challenge, func() {
 				brick.SetVisibility(false)
+				if s.allChallengesCompleted() {
+					s.onDone()
+				}
 			})
 		}
 	}
+}
+
+func (s *GameScene) allChallengesCompleted() bool {
+	for _, brick := range s.bricks {
+		if brick.IsVisible() {
+			return false
+		}
+	}
+	return true
 }

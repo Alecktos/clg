@@ -8,6 +8,7 @@ import (
 
 type ErrorScene struct {
 	errorMessage *ErrorMessage
+	err          error
 }
 
 func NewErrorScene() *ErrorScene {
@@ -17,10 +18,20 @@ func NewErrorScene() *ErrorScene {
 	}
 }
 
-func (e *ErrorScene) Draw(screen *ebiten.Image, error string) {
+func (e *ErrorScene) SetError(err error) {
+	e.err = err
+}
+
+func (e *ErrorScene) Draw(screen *ebiten.Image) {
 	screen.Fill(config.MidnightBlue())
+
+	errorMessage := ""
+	if e.err != nil {
+		errorMessage = e.err.Error()
+	}
+
 	e.errorMessage.Draw(screen)
 	if config.DevMode {
-		ebitenutil.DebugPrint(screen, error)
+		ebitenutil.DebugPrint(screen, errorMessage)
 	}
 }
