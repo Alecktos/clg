@@ -4,12 +4,13 @@ import (
 	"github.com/Alecktos/clg/assets/clg_json"
 	"github.com/Alecktos/clg/game/config"
 	"github.com/hajimehoshi/ebiten/v2"
+	"math/rand"
+	"time"
 )
 
 type GameScene struct {
 	bricks         [6]*gameBrick
 	challengeModal *modal
-	challenges     []clg_json.Challenge
 	onDone         func()
 }
 
@@ -28,17 +29,16 @@ func (s *GameScene) load() error {
 		return err
 	}
 
-	challenges, err := clg_json.LoadChallenges()
-	if err != nil {
-		return err
-	}
-	s.challenges = challenges
-
 	loadError := s.loadGameBricks()
 	return loadError
 }
 
 func (s *GameScene) loadGameBricks() error {
+	challenges, err := clg_json.LoadChallenges()
+	if err != nil {
+		return err
+	}
+
 	var loadError error
 
 	columns := 3
@@ -51,7 +51,7 @@ func (s *GameScene) loadGameBricks() error {
 
 	for index := range s.bricks {
 
-		brick, err := newGameBrick(s.challenges[index])
+		brick, err := newGameBrick(challenges[index])
 		if err != nil {
 			loadError = err
 			break
@@ -68,6 +68,9 @@ func (s *GameScene) loadGameBricks() error {
 		}
 		s.bricks[index] = brick
 	}
+
+	s.shuffleBricks()
+
 	return loadError
 }
 
@@ -103,4 +106,22 @@ func (s *GameScene) allChallengesCompleted() bool {
 		}
 	}
 	return true
+}
+
+func (s *GameScene) Reset() {
+	for _, brick := range s.bricks {
+		if !brick.IsVisible() {
+			brick.SetVisibility(true)
+		}
+	}
+	s.shuffleBricks()
+}
+
+func (s *GameScene) shuffleBricks() {
+	r := rand.New(rand.NewSource(time.Now().UnixNano()))
+	r.Shuffle(len(s.bricks), func(i, j int) {
+		tmp := s.bricks[i].Challenge
+		s.bricks[i].Challenge = s.bricks[j].Challenge
+		s.bricks[j].Challenge = tmp
+	})
 }

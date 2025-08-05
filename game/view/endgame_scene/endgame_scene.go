@@ -25,7 +25,7 @@ type endGameScene struct {
 func NewEndGameScene(onDone func()) (EndGameScene, error) {
 	hMargin := 40.0
 	width := config.WindowWidth - hMargin*2
-	height := float64(config.WindowHeight - hMargin*2)
+	height := float64(config.WindowHeight - hMargin*4)
 	x1 := hMargin
 	y1 := config.WindowHeight/2 - height/2
 

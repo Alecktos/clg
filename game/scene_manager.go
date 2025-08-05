@@ -44,6 +44,7 @@ func (sm *sceneManager) Load(predefinedError error) {
 
 	var loadSceneError error
 	sm.gameScene, loadSceneError = game_scene.NewGameScene(func() {
+		sm.gameScene.Reset()
 		sm.current = endSceneState
 	})
 	if loadSceneError != nil {
