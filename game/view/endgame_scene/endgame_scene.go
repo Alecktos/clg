@@ -19,10 +19,10 @@ type endGameScene struct {
 	header              view.Text
 	description         view.Text
 	startGameButton     buttons.PrimaryButton
+	onDone              func()
 }
 
-func NewEndGameScene() (EndGameScene, error) {
-
+func NewEndGameScene(onDone func()) (EndGameScene, error) {
 	hMargin := 40.0
 	width := config.WindowWidth - hMargin*2
 	height := float64(config.WindowHeight - hMargin*2)
@@ -69,6 +69,7 @@ func NewEndGameScene() (EndGameScene, error) {
 		description:         description,
 		backgroundRectangle: background,
 		startGameButton:     actionButton,
+		onDone:              onDone,
 	}, nil
 }
 
@@ -80,4 +81,7 @@ func (e *endGameScene) Draw(screen *ebiten.Image) {
 }
 func (e *endGameScene) Update() {
 	e.startGameButton.Update()
+	if e.startGameButton.IsClicked() {
+		e.onDone()
+	}
 }

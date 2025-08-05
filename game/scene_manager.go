@@ -52,7 +52,9 @@ func (sm *sceneManager) Load(predefinedError error) {
 		return
 	}
 
-	sm.endGameScene, loadSceneError = endgame_scene.NewEndGameScene()
+	sm.endGameScene, loadSceneError = endgame_scene.NewEndGameScene(func() {
+		sm.current = gameSceneState
+	})
 	if loadSceneError != nil {
 		sm.errorScene.SetError(loadSceneError)
 		sm.current = errorSceneState
@@ -79,6 +81,9 @@ func (sm *sceneManager) Update() {
 	switch sm.current {
 	case gameSceneState:
 		sm.gameScene.Update()
+		break
+	case endSceneState:
+		sm.endGameScene.Update()
 		break
 	}
 }
