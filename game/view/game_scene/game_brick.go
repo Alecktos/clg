@@ -38,7 +38,9 @@ func newGameBrick(challenge clg_json.Challenge) (*gameBrick, error) {
 }
 
 func (g *gameBrick) update() {
-	g.buttonModel.Update(g.Rectangle)
+	if g.IsVisible() { // should be passed to buttonModel instead
+		g.buttonModel.Update(g.Rectangle)
+	}
 }
 
 func (g *gameBrick) draw(screen *ebiten.Image) {
