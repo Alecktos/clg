@@ -1,4 +1,4 @@
-package view_model
+package view_models
 
 import (
 	"github.com/Alecktos/clg/game/common"

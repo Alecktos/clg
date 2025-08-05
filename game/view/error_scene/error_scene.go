@@ -2,6 +2,7 @@ package error_scene
 
 import (
 	"github.com/Alecktos/clg/game/config"
+	"github.com/Alecktos/clg/game/dev_utils"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 )
@@ -23,15 +24,15 @@ func (e *ErrorScene) SetError(err error) {
 }
 
 func (e *ErrorScene) Draw(screen *ebiten.Image) {
-	screen.Fill(config.MidnightBlue())
 
-	errorMessage := ""
+	errorDescription := ""
 	if e.err != nil {
-		errorMessage = e.err.Error()
+		errorDescription = e.err.Error()
 	}
 
 	e.errorMessage.Draw(screen)
 	if config.DevMode {
-		ebitenutil.DebugPrint(screen, errorMessage)
+		ebitenutil.DebugPrint(screen, errorDescription)
+		dev_utils.Log(errorDescription)
 	}
 }

@@ -21,7 +21,7 @@ const (
 
 const (
 	StandardFontSize = 90
-	HeaderFontSize   = 100
+	HeaderFontSize   = 120
 )
 
 var cachedDeviceType *DeviceType

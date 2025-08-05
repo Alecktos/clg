@@ -44,7 +44,7 @@ type clgText struct {
 	view_providers.ColorProvider
 }
 
-func NewCenterAlignedText() (Text, error) {
+func NewText() (Text, error) {
 	if fonts.GameFont == nil {
 		return nil, errors.New("font not loaded correctly")
 	}

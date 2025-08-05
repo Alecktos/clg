@@ -3,13 +3,12 @@ package game_scene
 import (
 	"github.com/Alecktos/clg/assets/clg_json"
 	"github.com/Alecktos/clg/game/config"
-	"github.com/Alecktos/clg/game/view/modal"
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
 type GameScene struct {
 	bricks         [6]*gameBrick
-	challengeModal modal.Modal
+	challengeModal *modal
 	challenges     []clg_json.Challenge
 	onDone         func()
 }
@@ -24,7 +23,7 @@ func NewGameScene(onDone func()) (*GameScene, error) {
 
 func (s *GameScene) load() error {
 	var err error
-	s.challengeModal, err = modal.NewModal()
+	s.challengeModal, err = newModal()
 	if err != nil {
 		return err
 	}

@@ -1,21 +1,27 @@
-package modal
+package buttons
 
 import (
 	"github.com/Alecktos/clg/game/common"
 	"github.com/Alecktos/clg/game/config"
 	"github.com/Alecktos/clg/game/view"
-	"github.com/Alecktos/clg/game/view_model"
+	"github.com/Alecktos/clg/game/view_models"
 	"github.com/hajimehoshi/ebiten/v2"
 	text2 "github.com/hajimehoshi/ebiten/v2/text/v2"
 )
 
-type closeChallengeButton struct {
+type PrimaryButton interface {
+	Draw(screen *ebiten.Image)
+	Update()
+	IsClicked() bool
+}
+
+type primaryButton struct {
 	backgroundRectangle view.RoundedRectangle
-	buttonModel         view_model.ButtonModel
+	buttonModel         view_models.ButtonModel
 	buttonLabel         view.Text
 }
 
-func newCloseChallengeButton(parentRectangle common.Rectangle) (*closeChallengeButton, error) {
+func NewPrimaryButton(parentRectangle common.Rectangle, label string) (PrimaryButton, error) {
 	width := config.WindowWidth - 500.0
 	height := 200.0
 
@@ -27,23 +33,23 @@ func newCloseChallengeButton(parentRectangle common.Rectangle) (*closeChallengeB
 		return nil, err
 	}
 
-	buttonLabel, err := view.NewCenterAlignedText()
+	buttonLabel, err := view.NewText()
 	if err != nil {
 		return nil, err
 	}
 
 	textLayout := view.NewTextLayout(common.Position{X: config.WindowWidth / 2, Y: rectangle.Position.Y + rectangle.Height/2})
 	textLayout.VerticalAlign = text2.AlignCenter
-	buttonLabel.SetText("Close", textLayout)
+	buttonLabel.SetText(label, textLayout)
 
-	return &closeChallengeButton{
+	return &primaryButton{
 		backgroundRectangle: backgroundRectangle,
 		buttonLabel:         buttonLabel,
-		buttonModel:         view_model.NewButtonModel(),
+		buttonModel:         view_models.NewButtonModel(),
 	}, nil
 }
 
-func (c *closeChallengeButton) update() {
+func (c *primaryButton) Update() {
 	c.buttonModel.Update(*c.backgroundRectangle.GetRectangle())
 	if c.buttonModel.FirstPressedTick() {
 		var darkenFactor float32 = 0.8
@@ -55,7 +61,11 @@ func (c *closeChallengeButton) update() {
 	}
 }
 
-func (c *closeChallengeButton) draw(screen *ebiten.Image) {
+func (c *primaryButton) Draw(screen *ebiten.Image) {
 	c.backgroundRectangle.Draw(screen)
 	c.buttonLabel.Draw(screen)
+}
+
+func (c *primaryButton) IsClicked() bool {
+	return c.buttonModel.IsClicked()
 }

@@ -2,7 +2,7 @@ package game_scene
 
 import (
 	"github.com/Alecktos/clg/assets/clg_json"
-	"github.com/Alecktos/clg/game/view_model"
+	"github.com/Alecktos/clg/game/view_models"
 	"github.com/Alecktos/clg/game/view_providers"
 	"image/color"
 
@@ -14,7 +14,7 @@ import (
 type gameBrick struct {
 	common.Rectangle
 	view_providers.VisibilityProvider
-	buttonModel view_model.ButtonModel
+	buttonModel view_models.ButtonModel
 	img         *ebiten.Image
 	Challenge   clg_json.Challenge
 }
@@ -24,7 +24,7 @@ const gameBrickHeight = 400
 
 func newGameBrick(challenge clg_json.Challenge) (*gameBrick, error) {
 	brick := &gameBrick{
-		buttonModel: view_model.NewButtonModel(),
+		buttonModel: view_models.NewButtonModel(),
 		Rectangle: common.Rectangle{
 			Position: common.Position{X: 0, Y: 0},
 			Width:    gameBrickWidth,

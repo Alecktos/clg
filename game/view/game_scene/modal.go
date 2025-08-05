@@ -1,30 +1,24 @@
-package modal
+package game_scene
 
 import (
 	"github.com/Alecktos/clg/assets/clg_json"
 	"github.com/Alecktos/clg/game/common"
 	"github.com/Alecktos/clg/game/config"
 	"github.com/Alecktos/clg/game/view"
+	"github.com/Alecktos/clg/game/view/buttons"
 	"github.com/hajimehoshi/ebiten/v2"
 )
-
-type Modal interface {
-	Update()
-	Draw(screen *ebiten.Image)
-	Open(challenge *clg_json.Challenge, onClosed func())
-	IsVisible() bool
-}
 
 type modal struct {
 	header               view.Text
 	description          view.Text
 	roundedRectangle     view.RoundedRectangle
-	closeChallengeButton *closeChallengeButton
+	closeChallengeButton buttons.PrimaryButton
 	isVisible            bool
 	onClosed             func()
 }
 
-func NewModal() (Modal, error) {
+func newModal() (*modal, error) {
 	hMargin := 80.0
 	width := config.WindowWidth - hMargin*2
 	height := float64(config.WindowHeight - 800)
@@ -33,12 +27,12 @@ func NewModal() (Modal, error) {
 
 	backgroundRectangle := common.Rectangle{Position: common.Position{X: x1, Y: y1}, Width: width, Height: height}
 
-	header, err := view.NewCenterAlignedText()
+	header, err := view.NewText()
 	if err != nil {
 		return nil, err
 	}
 
-	description, err := view.NewCenterAlignedText()
+	description, err := view.NewText()
 	if err != nil {
 		return nil, err
 	}
@@ -48,7 +42,7 @@ func NewModal() (Modal, error) {
 		return nil, err
 	}
 
-	closeButton, err := newCloseChallengeButton(backgroundRectangle)
+	closeButton, err := buttons.NewPrimaryButton(backgroundRectangle, "Close")
 	if err != nil {
 		return nil, err
 	}
@@ -74,6 +68,7 @@ func (c *modal) Open(challenge *clg_json.Challenge, onClosed func()) {
 	c.header.SetText(challenge.Header, textLayout)
 
 	textLayout.Position.Y += 200
+	textLayout.FontSize = config.StandardFontSize
 	textLayout.Color = config.ChampagneGold()
 	c.description.SetText(challenge.Description, textLayout)
 	c.isVisible = true
@@ -85,8 +80,8 @@ func (c *modal) IsVisible() bool {
 }
 
 func (c *modal) Update() {
-	c.closeChallengeButton.update()
-	if c.closeChallengeButton.buttonModel.IsClicked() {
+	c.closeChallengeButton.Update()
+	if c.closeChallengeButton.IsClicked() {
 		c.isVisible = false
 		c.onClosed()
 	}
@@ -99,5 +94,5 @@ func (c *modal) Draw(screen *ebiten.Image) {
 	c.roundedRectangle.Draw(screen)
 	c.header.Draw(screen)
 	c.description.Draw(screen)
-	c.closeChallengeButton.draw(screen)
+	c.closeChallengeButton.Draw(screen)
 }

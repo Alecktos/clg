@@ -19,7 +19,7 @@ type ErrorMessage struct {
 }
 
 func NewErrorMessage() (*ErrorMessage, error) {
-	errorText, loadError := view.NewCenterAlignedText()
+	errorText, loadError := view.NewText()
 
 	textLayout := view.NewTextLayout(common.Position{X: config.WindowWidth / 2, Y: config.WindowHeight / 2})
 	textLayout.VerticalAlign = text.AlignCenter
