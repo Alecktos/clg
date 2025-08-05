@@ -33,7 +33,6 @@ func (g *ClgGame) Update() error {
 }
 
 func (g *ClgGame) Draw(screen *ebiten.Image) {
-	screen.Fill(config.MidnightBlue())
 	g.sceneManager.Draw(screen)
 }
 
