@@ -4,6 +4,7 @@ import (
 	"github.com/Alecktos/clg/game/common"
 	"github.com/Alecktos/clg/game/dev_utils"
 	"github.com/Alecktos/clg/game/input"
+	"github.com/Alecktos/clg/game/providers"
 )
 
 type ButtonModel interface {
@@ -11,9 +12,11 @@ type ButtonModel interface {
 	IsPressed() bool
 	IsClicked() bool
 	FirstPressedTick() bool
+	providers.VisibilityProvider
 }
 
 type buttonModel struct {
+	providers.VisibilityProvider
 	isPressed        bool
 	pressedPosition  common.Position
 	hasPressed       bool
@@ -21,10 +24,19 @@ type buttonModel struct {
 }
 
 func NewButtonModel() ButtonModel {
-	return &buttonModel{}
+	return &buttonModel{
+		VisibilityProvider: providers.NewVisibilityProvider(),
+	}
 }
 
 func (b *buttonModel) Update(rectangle common.Rectangle) {
+	if !b.IsVisible() {
+		b.isPressed = false
+		b.hasPressed = false
+		b.firstPressedTick = false
+		return
+	}
+
 	if b.isPressed == true && input.IsPressed() == false && rectangle.Contains(b.pressedPosition) { //has released
 		b.isPressed = false
 		b.hasPressed = true

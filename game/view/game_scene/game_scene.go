@@ -1,11 +1,12 @@
 package game_scene
 
 import (
+	"math/rand"
+	"time"
+
 	"github.com/Alecktos/clg/assets/clg_json"
 	"github.com/Alecktos/clg/game/config"
 	"github.com/hajimehoshi/ebiten/v2"
-	"math/rand"
-	"time"
 )
 
 type GameScene struct {
@@ -90,7 +91,7 @@ func (s *GameScene) Update() {
 		brick.update()
 		if !s.challengeModal.IsVisible() && brick.buttonModel.IsClicked() {
 			s.challengeModal.Open(&brick.Challenge, func() {
-				brick.SetVisibility(false)
+				brick.buttonModel.SetVisibility(false)
 				if s.allChallengesCompleted() {
 					s.onDone()
 				}
@@ -101,7 +102,7 @@ func (s *GameScene) Update() {
 
 func (s *GameScene) allChallengesCompleted() bool {
 	for _, brick := range s.bricks {
-		if brick.IsVisible() {
+		if brick.buttonModel.IsVisible() {
 			return false
 		}
 	}
@@ -110,8 +111,8 @@ func (s *GameScene) allChallengesCompleted() bool {
 
 func (s *GameScene) Reset() {
 	for _, brick := range s.bricks {
-		if !brick.IsVisible() {
-			brick.SetVisibility(true)
+		if !brick.buttonModel.IsVisible() {
+			brick.buttonModel.SetVisibility(true)
 		}
 	}
 	s.shuffleBricks()

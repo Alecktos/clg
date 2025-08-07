@@ -4,7 +4,6 @@ import (
 	"image/color"
 
 	"github.com/Alecktos/clg/assets/clg_json"
-	"github.com/Alecktos/clg/game/providers"
 	"github.com/Alecktos/clg/game/view_models"
 
 	"github.com/Alecktos/clg/assets/images"
@@ -14,7 +13,6 @@ import (
 
 type gameBrick struct {
 	common.Rectangle
-	providers.VisibilityProvider
 	buttonModel view_models.ButtonModel
 	img         *ebiten.Image
 	Challenge   clg_json.Challenge
@@ -31,21 +29,19 @@ func newGameBrick(challenge clg_json.Challenge) (*gameBrick, error) {
 			Width:    gameBrickWidth,
 			Height:   gameBrickHeight,
 		},
-		VisibilityProvider: providers.NewVisibilityProvider(),
-		Challenge:          challenge,
+		// VisibilityProvider: providers.NewVisibilityProvider(),
+		Challenge: challenge,
 	}
 	err := brick.loadImage()
 	return brick, err
 }
 
 func (g *gameBrick) update() {
-	if g.IsVisible() { // should be passed to buttonModel instead
-		g.buttonModel.Update(g.Rectangle)
-	}
+	g.buttonModel.Update(g.Rectangle)
 }
 
 func (g *gameBrick) draw(screen *ebiten.Image) {
-	if !g.IsVisible() {
+	if !g.buttonModel.IsVisible() {
 		return
 	}
 	op := &ebiten.DrawImageOptions{}
