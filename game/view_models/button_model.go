@@ -8,15 +8,17 @@ import (
 )
 
 type ButtonModel interface {
+	providers.VisibilityProvider
+	providers.DisableProvider
 	Update(rectangle common.Rectangle)
 	IsPressed() bool
 	IsClicked() bool
 	FirstPressedTick() bool
-	providers.VisibilityProvider
 }
 
 type buttonModel struct {
 	providers.VisibilityProvider
+	providers.DisableProvider
 	isPressed        bool
 	pressedPosition  common.Position
 	hasPressed       bool
@@ -26,11 +28,12 @@ type buttonModel struct {
 func NewButtonModel() ButtonModel {
 	return &buttonModel{
 		VisibilityProvider: providers.NewVisibilityProvider(),
+		DisableProvider:    providers.NewDisableProvider(),
 	}
 }
 
 func (b *buttonModel) Update(rectangle common.Rectangle) {
-	if !b.IsVisible() {
+	if !b.IsVisible() || b.IsDisabled() {
 		b.isPressed = false
 		b.hasPressed = false
 		b.firstPressedTick = false

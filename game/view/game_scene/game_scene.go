@@ -10,7 +10,7 @@ import (
 )
 
 type GameScene struct {
-	bricks         [6]*gameBrick
+	bricks         [15]*gameBrick
 	challengeModal *modal
 	onDone         func()
 }
@@ -90,7 +90,9 @@ func (s *GameScene) Update() {
 	for _, brick := range s.bricks {
 		brick.update()
 		if !s.challengeModal.IsVisible() && brick.buttonModel.IsClicked() {
+			s.disableAllBricks()
 			s.challengeModal.Open(&brick.Challenge, func() {
+				s.enableAllBricks()
 				brick.buttonModel.SetVisibility(false)
 				if s.allChallengesCompleted() {
 					s.onDone()
@@ -107,6 +109,18 @@ func (s *GameScene) allChallengesCompleted() bool {
 		}
 	}
 	return true
+}
+
+func (s *GameScene) disableAllBricks() {
+	for _, brick := range s.bricks {
+		brick.buttonModel.SetDisabled(true)
+	}
+}
+
+func (s *GameScene) enableAllBricks() {
+	for _, brick := range s.bricks {
+		brick.buttonModel.SetDisabled(false)
+	}
 }
 
 func (s *GameScene) Reset() {
