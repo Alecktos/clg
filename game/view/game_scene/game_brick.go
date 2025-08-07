@@ -1,10 +1,11 @@
 package game_scene
 
 import (
-	"github.com/Alecktos/clg/assets/clg_json"
-	"github.com/Alecktos/clg/game/view_models"
-	"github.com/Alecktos/clg/game/view_providers"
 	"image/color"
+
+	"github.com/Alecktos/clg/assets/clg_json"
+	"github.com/Alecktos/clg/game/providers"
+	"github.com/Alecktos/clg/game/view_models"
 
 	"github.com/Alecktos/clg/assets/images"
 	"github.com/Alecktos/clg/game/common"
@@ -13,7 +14,7 @@ import (
 
 type gameBrick struct {
 	common.Rectangle
-	view_providers.VisibilityProvider
+	providers.VisibilityProvider
 	buttonModel view_models.ButtonModel
 	img         *ebiten.Image
 	Challenge   clg_json.Challenge
@@ -30,7 +31,7 @@ func newGameBrick(challenge clg_json.Challenge) (*gameBrick, error) {
 			Width:    gameBrickWidth,
 			Height:   gameBrickHeight,
 		},
-		VisibilityProvider: view_providers.NewVisibilityProvider(),
+		VisibilityProvider: providers.NewVisibilityProvider(),
 		Challenge:          challenge,
 	}
 	err := brick.loadImage()

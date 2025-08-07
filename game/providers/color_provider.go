@@ -1,8 +1,9 @@
-package view_providers
+package providers
 
 import (
-	"github.com/Alecktos/clg/game/config"
 	"image/color"
+
+	"github.com/Alecktos/clg/game/config"
 )
 
 type ColorProvider interface {

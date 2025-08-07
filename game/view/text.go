@@ -2,13 +2,14 @@ package view
 
 import (
 	"errors"
+	"strings"
+
 	"github.com/Alecktos/clg/assets/fonts"
 	"github.com/Alecktos/clg/game/common"
 	"github.com/Alecktos/clg/game/config"
-	"github.com/Alecktos/clg/game/view_providers"
+	"github.com/Alecktos/clg/game/providers"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/text/v2"
-	"strings"
 )
 
 type TextLayout struct {
@@ -34,14 +35,14 @@ func NewTextLayout(position common.Position) TextLayout {
 type Text interface {
 	SetText(text string, layout TextLayout)
 	Draw(screen *ebiten.Image)
-	view_providers.ColorProvider
+	providers.ColorProvider
 }
 
 type clgText struct {
 	text *string
 	op   *text.DrawOptions
 	f    *text.GoTextFace
-	view_providers.ColorProvider
+	providers.ColorProvider
 }
 
 func NewText() (Text, error) {
@@ -72,7 +73,7 @@ func (t *clgText) SetText(content string, layout TextLayout) {
 
 	textColor := layout.Color
 	t.op.ColorScale.ScaleWithColor(textColor)
-	t.ColorProvider = view_providers.NewColorProvider(textColor, func(clgColor config.ClgColor) {
+	t.ColorProvider = providers.NewColorProvider(textColor, func(clgColor config.ClgColor) {
 		t.op.ColorScale.Reset()
 		t.op.ColorScale.ScaleWithColor(clgColor)
 	})

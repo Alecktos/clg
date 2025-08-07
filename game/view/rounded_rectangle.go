@@ -1,12 +1,13 @@
 package view
 
 import (
+	"image/color"
+
 	"github.com/Alecktos/clg/game/common"
 	"github.com/Alecktos/clg/game/config"
-	"github.com/Alecktos/clg/game/view_providers"
+	"github.com/Alecktos/clg/game/providers"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/vector"
-	"image/color"
 )
 
 type RoundedRectangle interface {
@@ -20,14 +21,14 @@ type roundedRectangle struct {
 	common.Rectangle
 	radius     float32
 	whiteImage *ebiten.Image
-	view_providers.ColorProvider
+	providers.ColorProvider
 }
 
 func NewRoundedRectangle(rectangle common.Rectangle, radius float32, backgroundColor config.ClgColor) (RoundedRectangle, error) {
 	whiteImage := ebiten.NewImage(1, 1)
 	whiteImage.Fill(color.White)
 
-	colorProvider := view_providers.NewColorProvider(backgroundColor, nil)
+	colorProvider := providers.NewColorProvider(backgroundColor, nil)
 
 	return &roundedRectangle{
 		Rectangle:     rectangle,

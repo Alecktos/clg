@@ -1,4 +1,4 @@
-package view_providers
+package providers
 
 type VisibilityProvider interface {
 	SetVisibility(visible bool)
