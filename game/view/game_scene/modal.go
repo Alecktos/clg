@@ -6,12 +6,13 @@ import (
 	"github.com/Alecktos/clg/game/config"
 	"github.com/Alecktos/clg/game/view"
 	"github.com/Alecktos/clg/game/view/buttons"
+	"github.com/Alecktos/clg/game/view/text"
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
 type modal struct {
-	header               view.Text
-	description          view.Text
+	header               text.Text
+	description          text.Text
 	roundedRectangle     view.RoundedRectangle
 	closeChallengeButton buttons.PrimaryButton
 	isVisible            bool
@@ -27,12 +28,12 @@ func newModal() (*modal, error) {
 
 	backgroundRectangle := common.Rectangle{Position: common.Position{X: x1, Y: y1}, Width: width, Height: height}
 
-	header, err := view.NewText()
+	header, err := text.NewText()
 	if err != nil {
 		return nil, err
 	}
 
-	description, err := view.NewText()
+	description, err := text.NewText()
 	if err != nil {
 		return nil, err
 	}
@@ -60,14 +61,14 @@ func newModal() (*modal, error) {
 func (c *modal) Open(challenge *clg_json.Challenge, onClosed func()) {
 	y := c.roundedRectangle.GetRectangle().Position.Y + 85
 
-	textLayout := view.NewTextLayout(common.Position{X: config.WindowWidth / 2, Y: y})
+	textLayout := text.NewTextLayout(common.Position{X: config.WindowWidth / 2, Y: y})
 	textLayout.FontSize = config.HeaderFontSize
 	textLayout.Color = config.BlushPink()
 	textLayout.MaxWidth = int(c.roundedRectangle.GetRectangle().Width)
 
 	c.header.SetText(challenge.Header, textLayout)
 
-	textLayout.Position.Y += 200
+	textLayout.Position.Y += c.header.MeasureHeight() + 50
 	textLayout.FontSize = config.StandardFontSize
 	textLayout.Color = config.ChampagneGold()
 	c.description.SetText(challenge.Description, textLayout)

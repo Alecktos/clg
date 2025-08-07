@@ -1,41 +1,21 @@
-package view
+package text
 
 import (
 	"errors"
 	"strings"
 
 	"github.com/Alecktos/clg/assets/fonts"
-	"github.com/Alecktos/clg/game/common"
 	"github.com/Alecktos/clg/game/config"
 	"github.com/Alecktos/clg/game/providers"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/text/v2"
 )
 
-type TextLayout struct {
-	FontSize        float64
-	Position        common.Position
-	HorizontalAlign text.Align
-	VerticalAlign   text.Align
-	MaxWidth        int
-	Color           config.ClgColor
-}
-
-func NewTextLayout(position common.Position) TextLayout {
-	return TextLayout{
-		FontSize:        config.StandardFontSize,
-		Position:        position,
-		HorizontalAlign: text.AlignCenter,
-		VerticalAlign:   text.AlignStart,
-		MaxWidth:        config.WindowWidth,
-		Color:           config.ChampagneGold(),
-	}
-}
-
 type Text interface {
 	SetText(text string, layout TextLayout)
 	Draw(screen *ebiten.Image)
 	providers.ColorProvider
+	MeasureHeight() float64
 }
 
 type clgText struct {
@@ -122,4 +102,12 @@ func (t *clgText) splitTextIntoLines(input string, maxWidth int) string {
 
 func (t *clgText) splitWords(input string) []string {
 	return strings.Fields(input)
+}
+
+func (t *clgText) MeasureHeight() float64 {
+	if t.f == nil || t.op == nil {
+		return 0
+	}
+	_, textHeight := text.Measure(*t.text, t.f, t.op.LineSpacing)
+	return textHeight
 }

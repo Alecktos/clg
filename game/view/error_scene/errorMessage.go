@@ -4,7 +4,7 @@ import (
 	"github.com/Alecktos/clg/assets/fonts"
 	"github.com/Alecktos/clg/game/common"
 	"github.com/Alecktos/clg/game/config"
-	"github.com/Alecktos/clg/game/view"
+	text2 "github.com/Alecktos/clg/game/view/text"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 	"github.com/hajimehoshi/ebiten/v2/text/v2"
@@ -14,14 +14,14 @@ const errorMessageText = `Failed to load game.
 Please try and restart the app.`
 
 type ErrorMessage struct {
-	errorText     view.Text
+	errorText     text2.Text
 	textLoadError error
 }
 
 func NewErrorMessage() (*ErrorMessage, error) {
-	errorText, loadError := view.NewText()
+	errorText, loadError := text2.NewText()
 
-	textLayout := view.NewTextLayout(common.Position{X: config.WindowWidth / 2, Y: config.WindowHeight / 2})
+	textLayout := text2.NewTextLayout(common.Position{X: config.WindowWidth / 2, Y: config.WindowHeight / 2})
 	textLayout.VerticalAlign = text.AlignCenter
 	errorText.SetText(errorMessageText, textLayout)
 

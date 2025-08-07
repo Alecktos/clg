@@ -4,6 +4,7 @@ import (
 	"github.com/Alecktos/clg/game/common"
 	"github.com/Alecktos/clg/game/config"
 	"github.com/Alecktos/clg/game/view"
+	"github.com/Alecktos/clg/game/view/text"
 	"github.com/Alecktos/clg/game/view_models"
 	"github.com/hajimehoshi/ebiten/v2"
 	text2 "github.com/hajimehoshi/ebiten/v2/text/v2"
@@ -18,7 +19,7 @@ type PrimaryButton interface {
 type primaryButton struct {
 	backgroundRectangle view.RoundedRectangle
 	buttonModel         view_models.ButtonModel
-	buttonLabel         view.Text
+	buttonLabel         text.Text
 }
 
 func NewPrimaryButton(parentRectangle common.Rectangle, label string) (PrimaryButton, error) {
@@ -33,12 +34,12 @@ func NewPrimaryButton(parentRectangle common.Rectangle, label string) (PrimaryBu
 		return nil, err
 	}
 
-	buttonLabel, err := view.NewText()
+	buttonLabel, err := text.NewText()
 	if err != nil {
 		return nil, err
 	}
 
-	textLayout := view.NewTextLayout(common.Position{X: config.WindowWidth / 2, Y: rectangle.Position.Y + rectangle.Height/2})
+	textLayout := text.NewTextLayout(common.Position{X: config.WindowWidth / 2, Y: rectangle.Position.Y + rectangle.Height/2})
 	textLayout.VerticalAlign = text2.AlignCenter
 	buttonLabel.SetText(label, textLayout)
 
