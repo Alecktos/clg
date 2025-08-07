@@ -14,6 +14,7 @@ type ButtonModel interface {
 	IsPressed() bool
 	IsClicked() bool
 	FirstPressedTick() bool
+	Reset()
 }
 
 type buttonModel struct {
@@ -72,4 +73,13 @@ func (b *buttonModel) IsClicked() bool {
 
 func (b *buttonModel) FirstPressedTick() bool {
 	return b.firstPressedTick
+}
+
+func (b *buttonModel) Reset() {
+	b.isPressed = false
+	b.hasPressed = false
+	b.firstPressedTick = false
+	b.pressedPosition = common.Position{}
+	b.VisibilityProvider.Reset()
+	b.DisableProvider.Reset()
 }

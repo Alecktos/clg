@@ -3,6 +3,7 @@ package providers
 type DisableProvider interface {
 	SetDisabled(disabled bool)
 	IsDisabled() bool
+	Reset()
 }
 
 type disableProvider struct {
@@ -21,4 +22,8 @@ func (v *disableProvider) SetDisabled(disabled bool) {
 
 func (v *disableProvider) IsDisabled() bool {
 	return v.disabled
+}
+
+func (v *disableProvider) Reset() {
+	v.disabled = false
 }

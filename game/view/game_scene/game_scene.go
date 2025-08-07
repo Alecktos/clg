@@ -125,9 +125,7 @@ func (s *GameScene) enableAllBricks() {
 
 func (s *GameScene) Reset() {
 	for _, brick := range s.bricks {
-		if !brick.buttonModel.IsVisible() {
-			brick.buttonModel.SetVisibility(true)
-		}
+		brick.buttonModel.Reset()
 	}
 	s.shuffleBricks()
 }

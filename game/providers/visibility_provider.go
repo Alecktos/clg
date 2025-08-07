@@ -3,6 +3,7 @@ package providers
 type VisibilityProvider interface {
 	SetVisibility(visible bool)
 	IsVisible() bool
+	Reset()
 }
 
 type visibilityProvider struct {
@@ -11,7 +12,7 @@ type visibilityProvider struct {
 
 func NewVisibilityProvider() VisibilityProvider {
 	return &visibilityProvider{
-		visible: true, // Default visibility is true
+		visible: true,
 	}
 }
 
@@ -21,4 +22,8 @@ func (v *visibilityProvider) SetVisibility(visible bool) {
 
 func (v *visibilityProvider) IsVisible() bool {
 	return v.visible
+}
+
+func (v *visibilityProvider) Reset() {
+	v.visible = true
 }
