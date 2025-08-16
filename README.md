@@ -1,5 +1,5 @@
 # CLG
-A challenge game to play togheter on mobile devices. Written to learn Go and Ebiten game engine.
+A cooperative mobile challenge game built with Go and Ebiten game engine, created as a learning project.
 
 ## Images
 <table>
