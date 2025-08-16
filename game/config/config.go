@@ -15,8 +15,7 @@ const (
 const (
 	WindowWidth  = 1290
 	WindowHeight = 2532
-
-	DevMode = true
+	DevMode      = false
 )
 
 const (
